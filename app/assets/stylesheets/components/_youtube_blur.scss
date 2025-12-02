@@ -1,0 +1,21 @@
+.yt-container {
+  position: relative;
+  width: 560px;
+  height: 315px;
+}
+
+.yt-player {
+  width: 100%;
+  height: 100%;
+}
+
+.blur-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  backdrop-filter: blur(20px);
+  pointer-events: none; /* user can still click UI, diable or enable when wanted */
+}
