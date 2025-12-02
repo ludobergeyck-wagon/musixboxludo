@@ -57,6 +57,32 @@ playlist_blues = [
   {title: "Yes We Can Can", artist:"Allen Toussaint", youtube_url: "https://youtu.be/ioOzsi9aHQQ?si=mZapGXgcbBrWsqgi"}
 ]
  ] )
+ Song.create!(
+  [
+    playlist_rnb = [
+      {title: "With You", artist: "Chris Brown", youtube_url:  "https://youtu.be/nmjdaBaZe8Y?si=H9SwJ9yH1VVAYOgM"},
+      {title: "The Boy Is Mine", artist: "Brandy & Monica  ", youtube_url:  "https://youtu.be/qSIOp_K5GMw?si=CtS_vpbZ5aqyJ7sE"},
+      {title: "Can We Talk", artist: "Tevin Campbell", youtube_url:  "https://youtu.be/3SoYkCAzMBk?si=L-Rjw7lLcoM7G1Cg"},
+      {title: "Return Of The Mack", artist: "Mark Morrison", youtube_url:  "https://youtu.be/uB1D9wWxd2w?si=9b6KjUASRMbQVDwY"},
+      {title: "This Is How We Do It", artist: "Montell Jordan", youtube_url:  "https://youtu.be/0hiUuL5uTKc?si=DDXHqkQSTLkpFpGl"},
+      {title: "Creep", artist: "TLC", youtube_url:  "https://youtu.be/LlZydtG3xqI?si=SCgcuGmw6xoYNkGO"},
+      {title: "Don't Walk Away", artist: "Jade", youtube_url:  "https://youtu.be/wZ9HG0nGe-g?si=cwAsliRD3oQc8xqC"},
+      {title: "Love Like This", artist: "Faith Evans", youtube_url:  "https://youtu.be/w1QzBQKYbag?si=AX8MzOzbhWxc-BnP"},
+      {title: "I'm Dreaming", artist: "Christopher Williams", youtube_url:  "https://youtu.be/m51i4HbsI8k?si=X7VUflt3oEOdpxs_"},
+      {title: "Romantic", artist: "Karyn White", youtube_url:  "https://youtu.be/Mu-ty0dC9k4?si=H0e3VHc5R8UMrP7t"},
+    ]
+  ]
+ )
+playlist_hiphop.each do |song|
+  puts "#{song[:title]} par #{song[:artist]} – #{song[:youtube_url]}"
+end
 
+playlist_blues.each do |song|
+  puts "#{song[:title]} par #{song[:artist]} – #{song[:youtube_url]}"
+end
+
+playlist_rnb.each do |song|
+  puts "#{song[:title]} par #{song[:artist]} – #{song[:youtube_url]}"
+end
 
 puts "success"
