@@ -5,9 +5,21 @@ Session id: <%= @user_session.session_id %>
 Playlist id: <%= Session.find(@user_session.session_id).playlist.title %>
 <%= @playlist = Session.find(@user_session.session_id).playlist %>
 
-<%= Question.create(session_id: @user_session.session_id, song: Song.where(playlist: @playlist).first) %>
-<%= raise %>
-
-<% Question.all.each do |question| %>
-    <%= question.song %>
+<%= turbo_frame_tag "question" do %>
+    <%= render "questions/card", question: @question %>
 <% end %>
+
+
+    <div class="d-flex justify-content-center align-items-center flex-grow-1">
+                <%= link_to "#" do %>
+        <div class="buzzer d-flex justify-content-center align-items-center">
+            <div>
+                <%= image_tag "Logo sans nom 2.png", style: "width: 140px;" %>
+            </div>
+        </div>
+                <% end %>
+    </div>
+  </div>
+  <div class="bottom-buttons d-flex">
+    <div class="button-right flex-grow-1"><%= link_to "Pass", user_session(@user_session, current_question: @question.id) %></div>
+  </div>
