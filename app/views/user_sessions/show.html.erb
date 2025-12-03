@@ -6,7 +6,7 @@ Playlist id: <%= Session.find(@user_session.session_id).playlist.title %>
 <%= @playlist = Session.find(@user_session.session_id).playlist %>
 
 <%= turbo_frame_tag "question" do %>
-    <%= render "questions/card", question: @question %>
+    <%= render "questions/video", question: @current_question %>
 <% end %>
 
 
@@ -21,5 +21,5 @@ Playlist id: <%= Session.find(@user_session.session_id).playlist.title %>
     </div>
   </div>
   <div class="bottom-buttons d-flex">
-    <div class="button-right flex-grow-1"><%= link_to "Pass", user_session(@user_session, current_question: @question.id) %></div>
+    <div class="button-right flex-grow-1"><%= link_to "Pass", play_session_path(@user_session, current_question: @current_question) %></div>
   </div>
