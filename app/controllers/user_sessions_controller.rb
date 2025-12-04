@@ -16,5 +16,8 @@ class UserSessionsController < ApplicationController
     end
   end
 
+  def results 
+    @user_session = current_or_guest_user.user_sessions.find(params[:id])
+  end
 
 end
