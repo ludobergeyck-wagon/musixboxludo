@@ -17,7 +17,6 @@ class QuestionsController < ApplicationController
       @accuracy_artist >= 0.85 ? @question.successful_artist = 1 : @question.successful_artist = 0
       @accuracy_title >= 0.85 ? @question.successful_title = 1 : @question.successful_title = 0
       @question.save
-      raise
       render partial: "feedback_content", locals: {question: @question}
     else
       render :edit, status: :unprocessable_entity
