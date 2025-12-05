@@ -1,11 +1,10 @@
  <div class="d-flex justify-content-center my-4">
-    <div class="yt-container my-4 text-center">
+    <div class="yt-container my-4 text-center" data-youtube-target="player">
       <iframe
         class="yt-player"
-        src="<%="#{question.song.youtube_url}&autoplay=1" %>"
+        src="<%="#{question.song.youtube_url}&autoplay=1&enablejsapi=1" %>"
         frameborder="0"
-        allow="autoplay"
-        data-controller="autoplay">
+        allow="autoplay">
       </iframe>
       <div class="blur-overlay"></div>
     </div>
