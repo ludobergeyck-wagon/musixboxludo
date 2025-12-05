@@ -11,11 +11,33 @@ export default class extends Controller {
   }
 
   submitted(event) {
+    // Wait a tick for Turbo to update the DOM
+    setTimeout(() => {
+      const feedback = this.element.querySelector('[data-toggle-target="feedback"]')
 
-    // Only switch on successful response
-    if (!event.detail.success) return
+      if (!feedback) {
+        console.log("Feedback not found yet")
+        return
+      }
 
-    this.formTarget.classList.add("d-none")
-    this.feedbackTarget.classList.remove("d-none")
+      const isSuccess = feedback.dataset.success === "true"
+
+      if (isSuccess) {
+        // Correct! Hide form, show feedback
+        this.formTarget.classList.add("d-none")
+        feedback.classList.remove("d-none")
+      } else {
+        // Wrong! Hide form, show buzzer, play video
+        this.formTarget.classList.add("d-none")
+        this.buzzerTarget.classList.remove("d-none")
+
+        // Play video
+        const youtubeEl = this.element
+        const youtubeController = this.application.getControllerForElementAndIdentifier(youtubeEl, 'youtube')
+        if (youtubeController) {
+          youtubeController.play()
+        }
+      }
+    }, 100)
   }
 }

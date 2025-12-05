@@ -1,5 +1,5 @@
-<div data-toggle-target="feedback" class="d-none" data-success="<%= @question.successful_title && @question.successful_artist %>">
 <turbo-frame id="feedback_content">
+<div data-toggle-target="feedback" data-success="<%= @question.successful_title && @question.successful_artist %>">
   <% if @question.successful_title && @question.successful_artist %>
   <div class="d-block">
     <h2>Correct!</h2>
@@ -9,5 +9,5 @@
   <% else %>
   <h2>Incorrect</h2>
   <% end %>
-</turbo-frame>
 </div>
+</turbo-frame>
