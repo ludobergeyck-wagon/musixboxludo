@@ -2,7 +2,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["buzzer", "form", "feedback"]
+  static targets = ["buzzer", "form", "feedback", "welldone"]
 
   buzz(event) {
     event.preventDefault()
