@@ -31,19 +31,25 @@ class UserSessionsController < ApplicationController
 
 
   def share_card
-    # 1. Trouve la UserSession
+    # Trouver la UserSession
     @user_session = UserSession.find(params[:id])
     @questions = @user_session.session.questions
+    @playlist = @user_session.session.playlist
 
-    # 2. Vérifie les permissions (comme pour results)
-    # (Optionnel, mais recommandé)
 
-    # 3. Calcule les mêmes stats que pour results
-    # Tu peux réutiliser la même logique
+      # Calculer le score
+    @total_questions = @questions.count
+    @correct_titles = @questions.where(successful_title: true).count
+    @correct_artists = @questions.where(successful_artist: true).count
+    @score = @correct_titles + @correct_artists
+    @max_score = @total_questions * 2
+    @percentage = @max_score > 0 ? (@score.to_f / @max_score * 100).round : 0
+
+    # Calculer les mêmes stats que pour results
     if @questions.any?
       @fastest_response = @questions.order(:time_taken).first
 
-      # 2. Le titre trouvé le plus vite (uniquement les titres corrects)
+      # Le titre trouvé le plus vite (uniquement les titres corrects)
       @fastest_title = @questions
         .where(successful_title: true)  # seulement les titres corrects
         .order(:time_taken)             # tri des temps de réponse du + court au + long
@@ -52,9 +58,10 @@ class UserSessionsController < ApplicationController
       @fastest_response = nil
       @fastest_title = nil
     end
-    # 4. IMPORTANT : Pas de layout ou layout spécial
-    render layout: false  # ou 'share_card' si tu crées un layout spécial
+
+    render layout: false
   end
+
 
 
 
@@ -63,6 +70,17 @@ class UserSessionsController < ApplicationController
     # @user_session = UserSession.find(params[:id])
     @user_session = UserSession.find(params[:id])
     @questions = @user_session.session.questions
+    @playlist = @user_session.session.playlist
+
+    @total_questions = @questions.count
+    @correct_titles = @questions.where(successful_title: true).count
+    @correct_artists = @questions.where(successful_artist: true).count
+
+    @score = @correct_titles + @correct_artists # score du joueur(1 point par titre, 1 point par artiste)
+    @max_score = @total_questions * 2  # score max qui peut etre obtenu
+
+    @percentage = @max_score > 0 ? (@score.to_f / @max_score * 100).round : 0 # calcul du pourcentage en évitant l division par zéro
+
 
     # 1. Le temps de réponse le plus rapide (toutes questions confondues)
     if @questions.any?
