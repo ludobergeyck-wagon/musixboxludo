@@ -102,6 +102,24 @@ class UserSessionsController < ApplicationController
 
   def share
     @user_session = current_or_guest_user.user_sessions.find(params[:id])
+    @questions = @user_session.session.questions
+    @playlist = @user_session.session.playlist
+
+    @total_questions = @questions.count
+    @correct_titles = @questions.where(successful_title: true).count
+    @correct_artists = @questions.where(successful_artist: true).count
+    @score = @correct_titles + @correct_artists
+    @max_score = @total_questions * 2
+    @percentage = @max_score > 0 ? (@score.to_f / @max_score * 100).round : 0
+
+    if @questions.any?
+      @fastest_title = @questions
+        .where(successful_title: true)
+        .order(:time_taken)
+        .first
+    else
+      @fastest_title = nil
+    end
   end
 
 end
