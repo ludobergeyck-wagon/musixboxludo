@@ -6,17 +6,15 @@ export default class extends Controller {
   static values = {
     groupId: Number,
     userId: Number,
-    userName: String
   }
 
   connect() {
+    console.log("connected")
     this.channel = consumer.subscriptions.create(
       {
         channel: "LobbyChannel",
         group_id: this.groupIdValue,
-        user_id: this.userIdValue,
-        user_name: this.userNameValue
-      },
+        user_id: this.userIdValue      },
       {
         received: this.received.bind(this)
       }
@@ -34,11 +32,11 @@ export default class extends Controller {
     console.log("Received:", data)
 
     if (data.type === "user_joined") {
-      console.log(`${data.user_name} joined the lobby`)
+      console.log(`${data.user_id} joined the lobby`)
     }
 
     if (data.type === "user_left") {
-      console.log(`${data.user_name} left the lobby`)
+      console.log(`${data.user_id} left the lobby`)
     }
   }
 }
