@@ -22,6 +22,12 @@ export default class extends Controller {
     )
   }
 
+  disconnect() {
+    if (this.channel) {
+      this.channel.unsubscribe()
+    }
+  }
+
   start() {
     fetch(`/groups/${this.groupIdValue}/start`, {
       method: "POST",
@@ -34,11 +40,6 @@ export default class extends Controller {
   }
 
 
-  disconnect() {
-    if (this.channel) {
-      this.channel.unsubscribe()
-    }
-  }
 
   received(data) {
     console.log("Received:", data)
@@ -57,9 +58,77 @@ export default class extends Controller {
       }
     }
 
+    if (data.type === 'buzzer_locked') {
+      const buzzer = document.querySelector('[data-toggle-target="buzzer"]')
+      const buzzerMessage = document.getElementById('buzzer-message')
+
+      if (data.user_id === this.userIdValue) {
+        // I pressed the buzzer - toggle controller handles this
+      } else {
+        // Someone else pressed - hide my buzzer, show message
+        if (buzzer) buzzer.classList.add('d-none')
+        if (buzzerMessage) {
+          buzzerMessage.textContent = `${data.user_id} is answering...`
+          buzzerMessage.classList.remove('d-none')
+        }
+      }
+    }
+
+    if (data.type === 'buzzer_unlocked') {
+      const buzzer = document.querySelector('[data-toggle-target="buzzer"]')
+      const buzzerMessage = document.getElementById('buzzer-message')
+
+      // Show buzzer for everyone except the user who got it wrong
+      if (data.user_id !== this.userIdValue) {
+        if (buzzer) buzzer.classList.remove('d-none')
+      }
+      if (buzzerMessage) buzzerMessage.classList.add('d-none')
+    }
+
+    if (data.type === 'round_won') {
+      const buzzer = document.querySelector('[data-toggle-target="buzzer"]')
+      const buzzerMessage = document.getElementById('buzzer-message')
+
+      if (buzzer) buzzer.classList.add('d-none')
+      if (buzzerMessage) {
+        buzzerMessage.textContent = `Player ${data.user_id} got it right!`
+        buzzerMessage.classList.remove('d-none')
+      }
+    }
+
     if (data.type === "start_game") {
       // each client goes to its own play_session_path(@user_session)
       window.location = this.startUrlValue
     }
+
+    if (data.type === 'next_question') {
+      window.location = data.url
+    }
   }
+
+  buzzerPressed() {
+    this.channel.perform('buzzer_pressed', {
+      user_id: this.userIdValue,
+    })
+  }
+
+  answerWrong() {
+    this.channel.perform('answer_wrong', {
+      user_id: this.userIdValue
+    })
+  }
+
+  // Call this when answer is correct
+  answerCorrect() {
+    this.channel.perform('answer_correct', {
+      user_id: this.userIdValue
+    })
+  }
+
+  goToNext(event) {
+    event.preventDefault()
+    const url = event.currentTarget.href
+    this.channel.perform('next_question', { url: url })
+  }
+
 }

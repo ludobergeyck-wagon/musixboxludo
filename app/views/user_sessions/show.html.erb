@@ -1,11 +1,13 @@
-<div class="container-100 d-flex flex-column justify-content-between position-relative">
+<div class="container-100 d-flex flex-column justify-content-between position-relative"
+data-controller="lobby"
+data-lobby-user-id-value="<%= current_or_guest_user.id %>"
+data-lobby-group-id-value="<%= @user_session.group.id %>"
+data-lobby-start-url-value="<%= play_session_path(@user_session) %>">
   <div class="doudou" data-controller="youtube toggle">
     <div class="container-30">
-
-      <% questions = Question.where(session_id: @user_session.session_id).order(:id) %> 
+      <% questions = Question.where(session_id: @user_session.session_id).order(:id) %>
       <% total_questions = questions.count %>
       <% current_index = questions.find_index { |q| q.id == @current_question.id }.to_i + 1 %>
-
       <!-- MODIFICATION ICI : on ajoute id="progress_bar" -->
       <div id="progress_bar">
         <div class="d-flex gap-1 px-3 py-2">
@@ -23,7 +25,6 @@
           <span><%= current_index %> / <%= total_questions %></span>
         </div>
       </div>
-
       <%= turbo_frame_tag "question" do %>
         <div>
           <%= render "questions/video" , question: @current_question %>
@@ -33,7 +34,7 @@
 
     <div class="container-45">
       <div class="d-flex justify-content-center align-items-center flex-grow-1">
-        <%= link_to "#" , data: { action: "click->youtube#pause click->toggle#buzz" } do %>
+        <%= link_to "#" , data: { action: "click->youtube#pause click->toggle#buzz click->lobby#buzzerPressed" } do %>
           <div class="buzzer d-flex justify-content-center align-items-center bg-orange-theme" data-toggle-target="buzzer">
             <div>
               <%= image_tag "Logo sans nom 2.png" , style: "width: 140px;" %>
@@ -41,35 +42,35 @@
           </div>
         <% end %>
       </div>
-
-      <div data-controller="counter" class="container">
-        <div data-toggle-target="form" class="d-none">
-          <h1>Take your guess!</h1>
-          <%= simple_form_for @current_question, data: {
+      <!-- Message when someone else is answering -->
+<div id="buzzer-message" class="d-none text-center">
+  <!-- Will be filled by JavaScript -->
+</div>
+<div data-controller="counter" class="container">
+  <div data-toggle-target="form" class="d-none">
+    <h1>Take your guess!</h1>
+    <%= simple_form_for @current_question, data: {
                           action: "submit->counter#saveTime turbo:submit-end->toggle#submitted" } do |f| %>
-            <%= f.hidden_field :time_taken, data: { counter_target: "input" } %>
-            <%= f.input :user_answer_artist, placeholder: "Artist", label_html: { class: "sr-only" } %>
-            <%= f.input :user_answer_title, placeholder: "Title", label_html: { class: "sr-only" } %>
-            <%= f.submit "Go!" %>
-          <% end %>
-        </div>
-      </div>
-
-      <turbo-frame id="feedback_content">
-      </turbo-frame>
-
-      <div class="d-none d-flex justify-content-center align-items-center" data-toggle-target="welldone">
-         <%= image_tag "thumbsup.png" , style:"width: 300px;" %>
-      </div>
-    </div>
+      <%= f.hidden_field :time_taken, data: { counter_target: "input" } %>
+      <%= f.input :user_answer_artist, placeholder: "Artist", label_html: { class: "sr-only" } %>
+      <%= f.input :user_answer_title, placeholder: "Title", label_html: { class: "sr-only" } %>
+      <%= f.submit "Go!" %>
+    <% end %>
   </div>
 </div>
+<turbo-frame id="feedback_content">
+</turbo-frame>
+<div class="d-none d-flex justify-content-center align-items-center" data-toggle-target="welldone">
+  <%= image_tag "thumbsup.png" , style:"width: 300px;" %>
+</div>
 
-<div class="bottom-buttons d-flex">
-
-<%= link_to play_session_path(@user_session, current_question: @current_question),
-            class: "button-center flex-grow-1 bg-yellow-theme" do %>
-  Next >
-<% end %>
-
+    </div>
+    <div class="bottom-buttons d-flex">
+      <%= link_to play_session_path(@user_session, current_question: @current_question),
+            class: "button-center flex-grow-1 bg-yellow-theme",
+            data: { action: "click->lobby#goToNext" } do %>
+        Next >
+      <% end %>
+    </div>
+  </div>
 </div>

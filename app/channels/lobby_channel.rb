@@ -38,4 +38,47 @@ class LobbyChannel < ApplicationCable::Channel
       }
     )
   end
+
+  def buzzer_pressed(data)
+    ActionCable.server.broadcast(
+      "lobby_#{@group.id}",
+      {
+        type: "buzzer_locked",
+        user_id: data['user_id'],
+        # user_name: data['user_name']
+      }
+    )
+  end
+
+    def answer_wrong(data)
+    ActionCable.server.broadcast(
+      "lobby_#{@group.id}",
+      {
+        type: 'buzzer_unlocked',
+        user_id: data['user_id']
+      }
+    )
+    end
+
+     def answer_correct(data)
+    ActionCable.server.broadcast(
+      "lobby_#{@group.id}",
+      {
+        type: 'round_won',
+        user_id: data['user_id']
+      }
+    )
+  end
+
+  def next_question(data)
+  Rails.logger.info "=== NEXT QUESTION: #{data} ==="
+  ActionCable.server.broadcast(
+    "lobby_#{@group.id}",
+    {
+      type: 'next_question',
+      url: data['url']
+    }
+  )
+end
+
 end
