@@ -7,4 +7,20 @@ class GroupsController < ApplicationController
      @user_session = UserSession.find(params[:id])
     end
   end
+
+  def start
+    @group = Group.find(params[:id])
+
+    # Optional: mark group as started here if you want
+    # group.update(started_at: Time.current)
+
+    ActionCable.server.broadcast(
+      "lobby_#{@group.id}",
+      { type: "start_game" }
+    )
+
+    head :ok
+  end
+
+
 end

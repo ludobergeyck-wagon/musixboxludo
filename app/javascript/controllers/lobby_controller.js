@@ -6,6 +6,7 @@ export default class extends Controller {
   static values = {
     groupId: Number,
     userId: Number,
+    startUrl: String,
   }
 
   connect() {
@@ -19,6 +20,17 @@ export default class extends Controller {
         received: this.received.bind(this)
       }
     )
+  }
+
+  start() {
+    fetch(`/groups/${this.groupIdValue}/start`, {
+      method: "POST",
+      headers: {
+        "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ user_id: this.userIdValue })
+    })
   }
 
 
@@ -43,6 +55,11 @@ export default class extends Controller {
       if (playerElement) {
         playerElement.remove()
       }
+    }
+
+    if (data.type === "start_game") {
+      // each client goes to its own play_session_path(@user_session)
+      window.location = this.startUrlValue
     }
   }
 }
