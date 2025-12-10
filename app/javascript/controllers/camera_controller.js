@@ -47,21 +47,30 @@ connect() {
 // ============================================
 async autoStartCamera() {
   try {
+    // Contraintes vidéo pour s'adapter à l'orientation
+    const constraints = {
+      video: {
+        facingMode: "user",  // Caméra frontale
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+      }
+    }
+
     // On demande l'accès à la caméra
-    this.stream = await navigator.mediaDevices.getUserMedia({ video: true })
-    
+    this.stream = await navigator.mediaDevices.getUserMedia(constraints)
+
     // On affecte le flux vidéo à l'élément <video>
     this.videoTarget.srcObject = this.stream
-    
+
     // On affiche la vidéo
     this.videoTarget.style.display = "block"
-    
+
     // On affiche les boutons "Prendre photo" et "Reprendre"
     this.showButton("capturePhoto")
     this.showButton("retakePhoto")
-    
+
     console.log("Caméra démarrée automatiquement !")
-    
+
   } catch (error) {
     alert("Erreur caméra: " + error.message)
   }
@@ -156,12 +165,19 @@ this.showButton("goToCard")
     this.showButton("capturePhoto")
     
     // On redemande l'accès à la caméra pour reprendre une vidéo
-    navigator.mediaDevices.getUserMedia({ video: true })
+    const constraints = {
+      video: {
+        facingMode: "user",
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+      }
+    }
+    navigator.mediaDevices.getUserMedia(constraints)
       // ".then()" = quand la caméra est accessible, on exécute cette fonction
       .then(stream => {
         // On stocke le nouveau flux vidéo
         this.stream = stream
-        
+
         // On affiche le flux vidéo dans l'élément <video>
         this.videoTarget.srcObject = stream
       })

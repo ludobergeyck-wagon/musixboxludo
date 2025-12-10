@@ -1,0 +1,249 @@
+// _audio.scss - Vinyl Record Animation + Buzzer Platine
+// ============================================
+@import "../base/variables";
+
+// ============================================
+// BUZZER PLATINE ROND - Contient le vinyl qui tourne
+// ============================================
+.buzzer-platine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 260px;
+  height: 260px;
+  padding: 25px;
+  background: $orange;
+  border: $border-width-lg solid $border-color;
+  border-radius: 50%;
+  box-shadow: $shadow-xl;
+  cursor: pointer;
+  transition: $transition-fast;
+
+  // Animation pulse pour montrer que c'est cliquable
+  animation: buzzer-pulse 1.5s ease-in-out infinite;
+
+  &:hover {
+    animation: none;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    animation: none;
+    transform: translate(4px, 4px);
+    box-shadow: $shadow-sm;
+  }
+
+  // Quand la musique est terminée - arrête l'animation
+  &.music-ended {
+    animation: none;
+    opacity: 0.7;
+  }
+}
+
+// Responsive - plus grand sur desktop
+@media (min-width: 500px) {
+  .buzzer-platine {
+    width: 300px;
+    height: 300px;
+    padding: 35px;
+  }
+}
+
+// Animation pulse du buzzer
+@keyframes buzzer-pulse {
+  0%, 100% {
+    box-shadow: $shadow-xl;
+  }
+  50% {
+    box-shadow: 10px 10px 0 $black, 0 0 0 8px rgba($orange, 0.4);
+  }
+}
+
+// Texte BUZZ caché (le vinyl suffit)
+.buzzer-text {
+  display: none;
+}
+
+// ============================================
+// TIMER DISPLAY - Compteur de temps visible
+// ============================================
+.timer-display {
+  margin-top: 20px;
+  font-size: 2.5rem;
+  font-weight: 800;
+  font-family: 'Courier New', monospace;
+  color: $black;
+  background: $white;
+  padding: 8px 24px;
+  border: $border-width solid $border-color;
+  border-radius: $border-radius;
+  box-shadow: $shadow-md;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+}
+
+// État urgent - moins de 10 secondes
+.timer-display.timer-urgent {
+  background: $red;
+  color: $white;
+  animation: timer-pulse 0.5s ease-in-out infinite;
+}
+
+@keyframes timer-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@media (min-width: 500px) {
+  .timer-display {
+    font-size: 3rem;
+    padding: 10px 32px;
+  }
+}
+
+// ============================================
+// VINYL - Le disque noir qui tourne
+// ============================================
+.vinyl {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  position: relative;
+
+  // Dégradé pour effet 3D + reflets
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 50%, #0d0d0d 100%);
+
+  // Ombres pour effet de profondeur
+  box-shadow:
+    0 0 0 4px #1a1a1a,
+    0 0 0 6px #444,
+    inset 0 0 15px rgba(0, 0, 0, 0.5);
+
+  // Animation rotation
+  animation: spin 3s linear infinite;
+
+  // Quand la classe "paused" est ajoutée, on arrête
+  &.paused {
+    animation-play-state: paused;
+  }
+}
+
+// Responsive vinyl
+@media (min-width: 500px) {
+  .vinyl {
+    width: 230px;
+    height: 230px;
+  }
+}
+
+// ============================================
+// GROOVES - Les sillons (cercles concentriques)
+// ============================================
+.vinyl-grooves {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+
+  background: repeating-radial-gradient(
+    circle at center,
+    transparent 0px,
+    transparent 3px,
+    rgba(60, 60, 60, 0.6) 3px,
+    rgba(60, 60, 60, 0.6) 4px,
+    transparent 4px,
+    transparent 6px
+  );
+}
+
+// ============================================
+// LABEL - L'étiquette au centre avec le logo
+// ============================================
+.vinyl-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: $yellow;  // Même couleur que la navbar
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.05);
+}
+
+// Logo dans le label
+.vinyl-logo {
+  width: 40px;
+  height: auto;
+}
+
+// ============================================
+// REFLET - Effet brillant qui tourne avec le disque
+// ============================================
+.vinyl::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.1) 25%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.15) 75%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+  pointer-events: none;
+}
+
+// ============================================
+// ANIMATION KEYFRAMES
+// ============================================
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ============================================
+// CONTENT MAIN - Zone centrale avec buzzer
+// ============================================
+.content-main {
+  min-height: calc(100vh - 120px);  // Hauteur totale moins navbar et progress
+  padding-top: 30px;  // Espace en haut pour équilibrer
+  padding-bottom: 80px;  // Espace pour le bouton Next fixe (mobile)
+}
+
+.content-main [data-toggle-target="form"] {
+  padding-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .content-main {
+    min-height: calc(100vh - 150px);
+    padding-top: 40px;
+    padding-bottom: 80px;
+  }
+}

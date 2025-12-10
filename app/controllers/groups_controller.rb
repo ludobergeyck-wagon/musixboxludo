@@ -46,5 +46,29 @@ class GroupsController < ApplicationController
     head :ok
   end
 
+  def update_pseudo
+    @group = Group.find(params[:id])
+    pseudo = params[:pseudo].to_s.strip
+
+    if pseudo.present? && pseudo.length <= 15
+      current_or_guest_user.update(pseudo: pseudo)
+
+      # Broadcast le changement de pseudo à tous les joueurs du lobby
+      ActionCable.server.broadcast(
+        "lobby_#{@group.id}",
+        {
+          type: "pseudo_updated",
+          user_id: current_or_guest_user.id,
+          display_name: current_or_guest_user.display_name
+        }
+      )
+
+      flash[:notice] = "Pseudo updated!"
+    else
+      flash[:alert] = "Pseudo must be between 1 and 15 characters"
+    end
+
+    redirect_to group_path(@group)
+  end
 
 end

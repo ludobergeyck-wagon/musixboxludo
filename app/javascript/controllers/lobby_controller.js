@@ -58,18 +58,18 @@ export default class extends Controller {
     }
 
     if (data.type === 'video_paused') {
-      const youtubeEl = document.querySelector('[data-controller~="youtube"]')
-      if (youtubeEl) {
-        const youtubeController = this.application.getControllerForElementAndIdentifier(youtubeEl, 'youtube')
-        if (youtubeController) youtubeController.pause()
+      const audioEl = document.querySelector('[data-controller~="audio"]')
+      if (audioEl) {
+        const audioController = this.application.getControllerForElementAndIdentifier(audioEl, 'audio')
+        if (audioController) audioController.pause()
       }
     }
 
     if (data.type === 'video_playing') {
-      const youtubeEl = document.querySelector('[data-controller~="youtube"]')
-      if (youtubeEl) {
-        const youtubeController = this.application.getControllerForElementAndIdentifier(youtubeEl, 'youtube')
-        if (youtubeController) youtubeController.play()
+      const audioEl = document.querySelector('[data-controller~="audio"]')
+      if (audioEl) {
+        const audioController = this.application.getControllerForElementAndIdentifier(audioEl, 'audio')
+        if (audioController) audioController.play()
       }
     }
 
@@ -78,6 +78,17 @@ export default class extends Controller {
       const playerElement = document.getElementById(`player_${data.user_id}`)
       if (playerElement) {
         playerElement.remove()
+      }
+    }
+
+    if (data.type === 'pseudo_updated') {
+      // Met à jour le nom du joueur dans le lobby en temps réel
+      const playerElement = document.getElementById(`player_${data.user_id}`)
+      if (playerElement) {
+        const nameElement = playerElement.querySelector('p')
+        if (nameElement) {
+          nameElement.textContent = data.display_name
+        }
       }
     }
 

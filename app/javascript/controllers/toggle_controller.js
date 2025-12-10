@@ -2,11 +2,15 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["buzzer", "form", "feedback", "welldone"]
+  static targets = ["buzzer", "form", "feedback", "welldone", "timer"]
 
   buzz(event) {
     event.preventDefault()
     this.buzzerTarget.classList.add("d-none")
+    // Cache le timer quand on buzz
+    if (this.hasTimerTarget) {
+      this.timerTarget.classList.add("d-none")
+    }
     this.formTarget.classList.remove("d-none")
   }
 

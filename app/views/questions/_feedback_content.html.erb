@@ -13,14 +13,14 @@
           <% if question.successful_artist %>
             <%= question.song.artist %> <i class="fa-solid fa-check" style="color: #17922b;"></i>
           <% else %>
-            <%= question.user_answer_artist %> <i class="fa-solid fa-xmark" style="color: #e21818;"></i>
+            <span style="text-decoration: line-through;"><%= question.user_answer_artist %></span> → <%= question.song.artist %> <i class="fa-solid fa-xmark" style="color: #e21818;"></i>
           <% end %>
         </div>
         <div>Song:
           <% if question.successful_title %>
             <%= question.song.title %> <i class="fa-solid fa-check" style="color: #17922b;"></i>
           <% else %>
-            <%= question.user_answer_title %> <i class="fa-solid fa-xmark" style="color: #e21818;"></i>
+            <span style="text-decoration: line-through;"><%= question.user_answer_title %></span> → <%= question.song.title %> <i class="fa-solid fa-xmark" style="color: #e21818;"></i>
           <% end %>
         </div>
       </div>

@@ -25,7 +25,10 @@ Rails.application.routes.draw do
   get "play_sessions/:id/results/share", to: "user_sessions#share", as: "play_session_results_share"
 
   resources :groups, only: [:show, :create, :new] do
-    post :start, on: :member
+    member do
+      post :start
+      patch :update_pseudo
+    end
   end
 
 end

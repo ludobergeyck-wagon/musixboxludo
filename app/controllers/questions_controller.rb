@@ -15,17 +15,17 @@ class QuestionsController < ApplicationController
       @accuracy_title = jarow.getDistance(@question.user_answer_title.downcase, @question.song.title.downcase)
       @accuracy_artist = jarow.getDistance(@question.user_answer_artist.downcase, @question.song.artist.downcase)
 
-      if @accuracy_artist >= 0.85 
-        @question.successful_artist = 1 
+      if @accuracy_artist >= 0.75
+        @question.successful_artist = 1
         @user_session.score += 1
       else
         @question.successful_artist = 0
       end
 
-      if @accuracy_title >= 0.85 
-        @question.successful_title = 1 
+      if @accuracy_title >= 0.75
+        @question.successful_title = 1
         @user_session.score += 1
-      else 
+      else
         @question.successful_title = 0
       end
 

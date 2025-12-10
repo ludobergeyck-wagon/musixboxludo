@@ -208,9 +208,30 @@
   border-width: $border-width-lg;
   box-shadow: $shadow-lg;
 
+  // Animation pulse pour montrer que c'est cliquable
+  animation: buzzer-pulse 1.5s ease-in-out infinite;
+
+  &:hover {
+    animation: none;
+    transform: scale(1.05);
+  }
+
   &:active {
+    animation: none;
     transform: translate(3px, 3px);
     box-shadow: $shadow-sm;
+  }
+}
+
+// Animation pulse du buzzer
+@keyframes buzzer-pulse {
+  0%, 100% {
+    box-shadow: $shadow-lg;
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 8px 8px 0 $black, 0 0 0 8px rgba($orange, 0.3);
+    transform: scale(1.03);
   }
 }
 

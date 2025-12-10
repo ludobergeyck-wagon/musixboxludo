@@ -3,5 +3,5 @@
 <% user_color = colors[user.id % colors.length] %>
 <div id="player_<%= user.id %>" class="col d-flex flex-column align-items-center" style="min-width: 80px; max-width: 100px;">
     <i class="fa-solid fa-compact-disc fa-4x" style="color: <%= user_color %>; -webkit-text-stroke: 3px black;"></i>
-    <p  class="fw-bold" ><%= "User#{user.id}" %></p>
+    <p class="fw-bold text-truncate" style="max-width: 100px;"><%= user.display_name %></p>
 </div>

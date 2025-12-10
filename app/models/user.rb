@@ -7,4 +7,9 @@ class User < ApplicationRecord
   has_many :user_sessions
   has_many :questions
   # validates :pseudo, presence: true, uniqueness: true
+
+  # Retourne le pseudo si défini, sinon "Player X"
+  def display_name
+    pseudo.presence || "Player #{id}"
+  end
 end

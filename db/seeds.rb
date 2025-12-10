@@ -18,73 +18,73 @@ user = User.create!(
   playlist_rock = Playlist.create!({title:"Rock", user: user})
   songs_data = ItunesService.search_by_genre("rock")
   songs_data.each do |song_data|
-    Song.create!(playlist: playlist_rock, title: song_data[:title], artist: song_data[:artist])
+    Song.create!(playlist: playlist_rock, title: song_data[:title], artist: song_data[:artist], preview_url: song_data[:preview_url])
   end
   
   playlist_jazz = Playlist.create!({title:"Jazz", user: user})
     songs_data = ItunesService.search_by_genre("jazz")
     songs_data.each do |song_data|
-  Song.create!(playlist: playlist_jazz, title: song_data[:title], artist: song_data[:artist])
+  Song.create!(playlist: playlist_jazz, title: song_data[:title], artist: song_data[:artist], preview_url: song_data[:preview_url])
       end
 
   playlist_pop = Playlist.create!({title:"Pop", user: user})
     songs_data = ItunesService.search_by_genre("pop")
     songs_data.each do |song_data|
-  Song.create!(playlist: playlist_pop, title: song_data[:title], artist: song_data[:artist])
+  Song.create!(playlist: playlist_pop, title: song_data[:title], artist: song_data[:artist], preview_url: song_data[:preview_url])
   end
 
   playlist_rnb = Playlist.create!({title:"R'n'b", user: user})
     songs_data = ItunesService.search_by_genre("rnb")
     songs_data.each do |song_data|
-  Song.create!(playlist: playlist_rnb, title: song_data[:title], artist: song_data[:artist])
+  Song.create!(playlist: playlist_rnb, title: song_data[:title], artist: song_data[:artist], preview_url: song_data[:preview_url])
     end
 
   playlist_blues = Playlist.create!({title:"Blues", user: user})
   songs_data = ItunesService.search_by_genre("blues")
   songs_data.each do |song_data|
-  Song.create!(playlist: playlist_blues, title: song_data[:title], artist: song_data[:artist])
+  Song.create!(playlist: playlist_blues, title: song_data[:title], artist: song_data[:artist], preview_url: song_data[:preview_url])
   end
 
-  playlist_hiphop = Playlist.create!({title:"Hip Hop", user: user})
-    songs_data = ItunesService.search_by_genre("Hip Hop")
+  playlist_rapfr = Playlist.create!({title:"Rap FR", user: user})
+    songs_data = ItunesService.search_by_genre("Rap Français")
     songs_data.each do |song_data|
-  Song.create!(playlist: playlist_hiphop, title: song_data[:title], artist: song_data[:artist])
+  Song.create!(playlist: playlist_rapfr, title: song_data[:title], artist: song_data[:artist], preview_url: song_data[:preview_url])
   end
   
   playlist_soul = Playlist.create!({title:"Soul", user: user})
     songs_data = ItunesService.search_by_genre("soul")
     songs_data.each do |song_data|
-  Song.create!(playlist: playlist_soul, title: song_data[:title], artist: song_data[:artist])
+  Song.create!(playlist: playlist_soul, title: song_data[:title], artist: song_data[:artist], preview_url: song_data[:preview_url])
   end
 
   playlist_funk = Playlist.create!({title:"Funk", user: user})
     songs_data = ItunesService.search_by_genre("Funk")
     songs_data.each do |song_data|
-  Song.create!(playlist: playlist_funk, title: song_data[:title], artist: song_data[:artist])
+  Song.create!(playlist: playlist_funk, title: song_data[:title], artist: song_data[:artist], preview_url: song_data[:preview_url])
   end
 
   playlist_disco = Playlist.create!({title:"disco", user: user})
     songs_data = ItunesService.search_by_genre("disco")
     songs_data.each do |song_data|
-  Song.create!(playlist: playlist_disco, title: song_data[:title], artist: song_data[:artist])
+  Song.create!(playlist: playlist_disco, title: song_data[:title], artist: song_data[:artist], preview_url: song_data[:preview_url])
   end
   
   playlist_classic = Playlist.create!({title:"Classic", user: user})
   songs_data = ItunesService.search_by_genre("Classic")
   songs_data.each do |song_data|
-  Song.create!(playlist: playlist_classic, title: song_data[:title], artist: song_data[:artist])
+  Song.create!(playlist: playlist_classic, title: song_data[:title], artist: song_data[:artist], preview_url: song_data[:preview_url])
   end
 
   playlist_punk = Playlist.create!({title:"Punk", user: user})
   songs_data = ItunesService.search_by_genre("Punk")
   songs_data.each do |song_data|
-  Song.create!(playlist: playlist_punk, title: song_data[:title], artist: song_data[:artist])
+  Song.create!(playlist: playlist_punk, title: song_data[:title], artist: song_data[:artist], preview_url: song_data[:preview_url])
   end
 
   playlist_world = Playlist.create!({title:"World", user: user})
   songs_data = ItunesService.search_by_genre("World")
   songs_data.each do |song_data|
-  Song.create!(playlist: playlist_world, title: song_data[:title], artist: song_data[:artist])
+  Song.create!(playlist: playlist_world, title: song_data[:title], artist: song_data[:artist], preview_url: song_data[:preview_url])
   end
 
 
