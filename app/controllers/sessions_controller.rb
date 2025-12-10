@@ -8,8 +8,14 @@ class SessionsController < ApplicationController
 
   def create
     @session = Session.new(session_params)
+    @playlist = @session.playlist
     if @session.save
-      # raise
+
+        array = (0..Song.where(playlist_id: @playlist.id).count-1).to_a.shuffle.first(@session.number_of_questions)
+        array.each do |song|
+          Question.create(session_id: @session.id, song: Song.where(playlist_id: @playlist.id)[song])
+        end
+
       @user_session = UserSession.create!(
         user:    current_or_guest_user,
         session: @session,
