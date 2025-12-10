@@ -23,6 +23,12 @@
   height: 40dvh;
 }
 
+.container-navbar {
+  margin-top: 60px;
+  height: calc(100vh - 60px);
+  height: calc(100dvh - 60px);
+}
+
 // -----------------------------
 // Share Container (legacy)
 // -----------------------------
@@ -64,7 +70,7 @@
 
   // La carte à l'intérieur doit s'adapter
   .card-result,
-  & > div {
+  &>div {
     max-height: 100%;
     width: 100%;
     max-width: 400px;

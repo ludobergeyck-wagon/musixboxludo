@@ -75,21 +75,22 @@ class UserSessionsController < ApplicationController
     @playlist = @user_session.session.playlist
 
     @total_questions = @questions.count
-    @correct_titles = @questions.where(successful_title: true).count
-    @correct_artists = @questions.where(successful_artist: true).count
+    # @correct_titles = @questions.where(successful_title: true).count
+    # @correct_artists = @questions.where(successful_artist: true).count
 
-    @score = @correct_titles + @correct_artists # score du joueur(1 point par titre, 1 point par artiste)
+    # @score = @correct_titles + @correct_artists # score du joueur(1 point par titre, 1 point par artiste)
+    @score = @user_session.score
     @max_score = @total_questions * 2  # score max qui peut etre obtenu
 
     @percentage = @max_score > 0 ? (@score.to_f / @max_score * 100).round : 0 # calcul du pourcentage en évitant l division par zéro
 
     # 1. Le temps de réponse le plus rapide (toutes questions confondues)
     if @questions.any?
-      @fastest_response = @questions.order(:time_taken).first
+      @fastest_response = @questions.where(user: current_or_guest_user).order(:time_taken).first
 
     # 2. Le titre trouvé le plus vite (uniquement les titres corrects)
     @fastest_title = @questions
-      .where(successful_title: true)  # seulement les titres corrects
+      .where(user: current_or_guest_user)  # seulement les titres corrects
       .order(:time_taken)             # tri des temps de réponse du + court au + long
       .first                          # renvoie le temps le plus rapide
     else
