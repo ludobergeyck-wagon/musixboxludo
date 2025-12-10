@@ -1,4 +1,3 @@
-
 <head>
   <title>Share Card - MusixBox</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -6,33 +5,22 @@
 </head>
 <body>
 
-  <div class="container-100 d-flex align-items-center p-2">
-    <div class="justify-content-center w-100">
-      <div class="col-12 col-md-8 col-lg-6">
+  <div class="share-card-page">
+    <div class="share-card-content">
 
-        <%= render "shared/card" %>
+      <%= render "shared/card" %>
 
-        <!-- BOUTONS PARTAGE ET SAUVEGARDE -->
-        <div class="d-flex gap-2 mt-4 justify-content-center no-print">
-          <button onclick="savePhoto()" class="btn btn-lg w-50" style="background: #FACC15 !important; border: 3px solid #1a1a1a !important; box-shadow: 4px 4px 0 #1a1a1a !important; font-weight: 700 !important; font-family: 'Space Grotesk', sans-serif !important;">
-            💾 Save
-          </button>
-          <button onclick="shareResults()" class="btn btn-lg w-50" style="background: #F97316 !important; border: 3px solid #1a1a1a !important; box-shadow: 4px 4px 0 #1a1a1a !important; font-weight: 700 !important; color: white !important; font-family: 'Space Grotesk', sans-serif !important;">
-            📤 Share
-          </button>
-        </div>
+    </div>
 
-<div class="bottom-buttons d-flex no-print">
-  <%= button_tag "Save",
-      type: "button",
-      class: "button-left flex-grow-1 bg-orange-theme w-50",
-      onclick: "savePhoto()" %>
-
-  <%= button_tag "Share results",
-      type: "button",
-      class: "button-right flex-grow-1 bg-yellow-theme w-50",
-      onclick: "shareResults()" %>
-
-</div>
+    <!-- BOUTONS PARTAGE ET SAUVEGARDE -->
+    <div class="share-card-buttons no-print">
+      <button onclick="savePhoto()" class="btn-selfie flex-grow-1">
+        💾 Save
+      </button>
+      <button onclick="shareResults()" class="btn-share flex-grow-1">
+        📤 Share
+      </button>
+    </div>
+  </div>
 
 </body>

@@ -1,0 +1,53 @@
+// ==========================================================
+// _navbar.scss - Neo Brutalism Navigation
+// ==========================================================
+@import "../base/variables";
+
+// -----------------------------
+// Top Navigation Bar
+// -----------------------------
+.top-nav {
+  background: $yellow;
+  border-bottom: $border-width solid $border-color;
+  padding-top: $safe-area-top;
+  z-index: 100;
+}
+
+// -----------------------------
+// Navigation Items
+// -----------------------------
+.nav-item-brutal {
+  color: $black;
+  transition: $transition-fast;
+  padding: 0.4rem 0.8rem;
+  border-radius: $border-radius;
+  border: $border-width-sm solid transparent;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.nav-item-brutal.active,
+.nav-item-brutal:hover {
+  background: $white;
+  border: $border-width-sm solid $border-color;
+  box-shadow: $shadow-sm;
+}
+
+.nav-item-brutal:active {
+  transform: translate(2px, 2px);
+  box-shadow: $shadow-sm-active;
+}
+
+// -----------------------------
+// Navigation Icon & Label
+// -----------------------------
+.nav-icon {
+  font-size: 1.1rem;
+}
+
+.nav-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}

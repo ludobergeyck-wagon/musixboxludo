@@ -1,93 +1,30 @@
-@import "components/sign_up";
-// Graphical variables
-@import "config/fonts";
-@import "config/colors";
-@import "config/bootstrap_variables";
+// ==========================================================
+// application.scss - Main Entry Point
+// Musix Box - Neo Brutalism Design System
+// ==========================================================
 
+// -----------------------------
+// 1. Configuration (fonts, bootstrap vars)
+// -----------------------------
+@import "config/index";
 
-// External libraries
+// -----------------------------
+// 2. External Libraries
+// -----------------------------
 @import "bootstrap";
 @import "font-awesome";
 
-// Your CSS partials
+// -----------------------------
+// 3. Base (variables, reset)
+// -----------------------------
+@import "base/index";
+
+// -----------------------------
+// 4. Components
+// -----------------------------
 @import "components/index";
-@import "pages/index";
-@import "pages/index";
 
-// style of the app
-@import "share";
-@import "home";
-@import "variables";
-@import "base";
-@import "home";
-@import "session";
-@import "show";
-@import "results";
-@import "card";
-
-
-
-// Background-theme colors :
-.bg-orange-theme{
-  background-color: #FF9500;;
-}
-
-.bg-yellow-theme {
-  background-color: #FFD700;
-}
-
-.bg-purple-theme {
-  background-color: #9D4EDD;
-}
-
-.bg-cream-theme {
-  background-color: #FFF8E7;
-}
-
-.bg-gray-theme {
-  background-color: #353535;
-}
-
-// Theme colors :
-
-.orange-theme {
-  color: #FF9500;
-}
-
-.yellow-theme {
-  color: #FFD700;
-}
-
-.purple-theme {
-  color: #9D4EDD;
-}
-
-.cream-theme {
-  color: #FFF8E7;
-}
-
-.gray-theme {
-  color: #353535;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-}
-
-//bootstrap edit
-
-.btn-select:hover {
-  background-color: #9D4EDD;
-  color: white;
-  border-color: #9D4EDD;
-}
-
-// body {
-//   overflow: hidden;
-// }
-
-//added for share card
-  @media print {
-    .no-print { display: none !important; }
-  }
+// -----------------------------
+// 5. Layouts
+// -----------------------------
+@import "layouts/index";

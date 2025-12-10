@@ -1,0 +1,83 @@
+// ==========================================================
+// _feedback.scss - Neo Brutalism Feedback & Alerts
+// ==========================================================
+@import "../base/variables";
+
+// -----------------------------
+// Feedback Overlay (Show page)
+// -----------------------------
+.feedback-over {
+  position: absolute;
+  top: 3rem;
+  left: 0.5rem;
+  z-index: 100 !important;
+  background: $white;
+  border: $border-width-sm solid $border-color;
+  border-radius: $border-radius;
+  box-shadow: $shadow-sm;
+  padding: 0.8rem;
+  text-align: center;
+  min-width: 100px;
+  max-width: 200px;
+  width: auto;
+  height: auto;
+
+  h2 {
+    font-weight: 700;
+    color: $black;
+    margin-bottom: 0.3rem;
+    font-size: 1rem;
+  }
+
+  div {
+    font-weight: 600;
+    color: $black;
+    margin-bottom: 0.1rem;
+    font-size: 0.8rem;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+
+  // Success state (green background)
+  &[data-success="true"] {
+    background: #d4edda;
+  }
+
+  // Warning/incorrect state (yellow background)
+  &[data-success="false"] {
+    background: #fff3cd;
+  }
+}
+
+@media (min-width: 500px) {
+  .feedback-over {
+    width: 130px;
+    height: 130px;
+
+    h2 {
+      font-size: 0.85rem;
+    }
+
+    div {
+      font-size: 0.7rem;
+      max-width: 115px;
+    }
+  }
+}
+
+// -----------------------------
+// Alert Component
+// -----------------------------
+.alert {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 1000;
+}
+
+// -----------------------------
+// Thumbs Up Image
+// -----------------------------
+.welldone-img {
+  max-width: 150px;
+}

@@ -1,0 +1,65 @@
+// ==========================================================
+// _variables.scss - Global Neo Brutalism Design System
+// ==========================================================
+
+// -----------------------------
+// Colors - Neo Brutalism Palette
+// -----------------------------
+$orange: #F97316;
+$yellow: #FACC15;
+$green: #22c55e;
+$black: #1a1a1a;
+$white: #ffffff;
+$bg: #FFF7ED;
+
+// Legacy colors (for backwards compatibility)
+$red: #FD1015;
+$blue: #0D6EFD;
+$gray: #353535;
+$light-gray: #F4F4F4;
+$purple: #9D4EDD;
+$cream: #FFF8E7;
+
+// -----------------------------
+// Typography
+// -----------------------------
+$font-family: 'Space Grotesk', sans-serif;
+$font-family-body: 'Inter', 'Helvetica', sans-serif;
+$font-family-headers: 'Jaro', 'Helvetica', sans-serif;
+
+// -----------------------------
+// Borders
+// -----------------------------
+$border-width-sm: 2px;
+$border-width: 3px;
+$border-width-lg: 4px;
+$border-color: $black;
+$border-radius-sm: 8px;
+$border-radius: 10px;
+$border-radius-lg: 12px;
+
+// -----------------------------
+// Shadows (Neo Brutalism hard shadows)
+// -----------------------------
+$shadow-sm: 3px 3px 0 $black;
+$shadow: 4px 4px 0 $black;
+$shadow-md: 5px 5px 0 $black;
+$shadow-lg: 6px 6px 0 $black;
+$shadow-xl: 8px 8px 0 $black;
+
+// Active state shadows (pressed effect)
+$shadow-sm-active: 1px 1px 0 $black;
+$shadow-active: 2px 2px 0 $black;
+$shadow-lg-active: 3px 3px 0 $black;
+
+// -----------------------------
+// Transitions
+// -----------------------------
+$transition-fast: all 0.15s ease;
+
+// -----------------------------
+// Spacing
+// -----------------------------
+$safe-area-top: env(safe-area-inset-top, 0px);
+$navbar-height: 5.5rem;
+$navbar-padding-top: calc(#{$navbar-height} + #{$safe-area-top});

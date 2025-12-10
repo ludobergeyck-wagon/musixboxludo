@@ -1,0 +1,48 @@
+// ==========================================================
+// _progress.scss - Neo Brutalism Progress Bars
+// ==========================================================
+@import "../base/variables";
+
+// -----------------------------
+// Progress Bar Container
+// -----------------------------
+#progress_bar {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 60 !important;
+  background: transparent;
+  padding: 0;
+}
+
+// -----------------------------
+// Progress Bar Styles
+// -----------------------------
+.progress-brutal {
+  height: 8px;
+  background: rgba($white, 0.5);
+  border: $border-width-sm solid $border-color;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-brutal-fill {
+  background: $orange;
+  height: 100%;
+}
+
+.progress-brutal-empty {
+  background: rgba($white, 0.3);
+  height: 100%;
+}
+
+// -----------------------------
+// Progress Text
+// -----------------------------
+.progress-text {
+  color: $black;
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-shadow: 0 0 3px $white, 0 0 3px $white;
+}

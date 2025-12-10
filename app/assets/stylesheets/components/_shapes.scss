@@ -1,0 +1,114 @@
+// ==========================================================
+// _shapes.scss - Neo Brutalism Decorative Shapes
+// ==========================================================
+@import "../base/variables";
+
+// -----------------------------
+// Base Shape Styles
+// -----------------------------
+// Shapes are hidden on mobile and shown on larger screens
+
+.shape-1,
+.shape-2,
+.shape-3 {
+  display: none;
+}
+
+// -----------------------------
+// Shape Mixin
+// -----------------------------
+@mixin shape-base {
+  display: block;
+  position: absolute;
+  border: $border-width solid $border-color;
+  z-index: 0;
+}
+
+// -----------------------------
+// Desktop Shapes
+// -----------------------------
+@media (min-width: 500px) {
+  // Yellow square rotated
+  .shape-1 {
+    @include shape-base;
+    width: 60px;
+    height: 60px;
+    background: $yellow;
+    border-radius: $border-radius-lg;
+    top: 20%;
+    left: 10%;
+    transform: rotate(15deg);
+  }
+
+  // Orange circle
+  .shape-2 {
+    @include shape-base;
+    width: 40px;
+    height: 40px;
+    background: $orange;
+    border-radius: 50%;
+    top: 30%;
+    right: 15%;
+  }
+
+  // Yellow square rotated (opposite)
+  .shape-3 {
+    @include shape-base;
+    width: 50px;
+    height: 50px;
+    background: $yellow;
+    bottom: 25%;
+    left: 8%;
+    transform: rotate(-10deg);
+  }
+}
+
+// -----------------------------
+// Page-specific Shape Overrides
+// -----------------------------
+
+// Session page shapes
+.bg-session {
+  .shape-1 {
+    top: 15%;
+    left: 5%;
+  }
+
+  .shape-2 {
+    top: 20%;
+    right: 8%;
+  }
+
+  .shape-3 {
+    bottom: 15%;
+  }
+}
+
+// Results page shapes
+.bg-results {
+  @media (min-width: 500px) {
+    .shape-1 {
+      width: 50px;
+      height: 50px;
+      top: 15%;
+      right: 5%;
+      left: auto;
+    }
+
+    .shape-2 {
+      width: 35px;
+      height: 35px;
+      bottom: 25%;
+      left: 5%;
+      top: auto;
+      right: auto;
+    }
+
+    .shape-3 {
+      width: 40px;
+      height: 40px;
+      top: 40%;
+      bottom: auto;
+    }
+  }
+}
