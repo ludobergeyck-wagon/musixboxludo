@@ -4,6 +4,10 @@
   <div class="shape-2"></div>
   <div class="shape-3"></div>
 
+  <%= UserSession.where(group: @group).count == 1 ? @mode = "solo" : @mode = "match" %>
+
+  <div>This game was a <%= @mode %> game</div>
+
   <!-- Title -->
   <header class="text-center mb-4 position-relative" style="z-index: 1;">
     <h1 class="page-title mb-0">Your Results</h1>
