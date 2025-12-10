@@ -8,10 +8,10 @@
 // -----------------------------
 .feedback-over {
   position: absolute;
-  top: 3rem;
-  left: 0.5rem;
+  top: 6dvh;
+  left: 4dvh;
   z-index: 100 !important;
-  background: $white;
+  background: #fff3cd;
   border: $border-width-sm solid $border-color;
   border-radius: $border-radius;
   box-shadow: $shadow-sm;
@@ -38,15 +38,15 @@
     white-space: normal;
   }
 
-  // Success state (green background)
-  &[data-success="true"] {
-    background: #d4edda;
-  }
+  // // Success state (green background)
+  // &[data-success="true"] {
+  //   background: #d4edda;
+  // }
 
-  // Warning/incorrect state (yellow background)
-  &[data-success="false"] {
-    background: #fff3cd;
-  }
+  // // Warning/incorrect state (yellow background)
+  // &[data-success="false"] {
+  //   background: #fff3cd;
+  // }
 }
 
 @media (min-width: 500px) {
