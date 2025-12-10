@@ -1,0 +1,71 @@
+// ==========================================================
+// _backgrounds.scss - Neo Brutalism Page Backgrounds
+// ==========================================================
+@import "../base/variables";
+
+// -----------------------------
+// Base Background Mixin
+// -----------------------------
+@mixin page-bg {
+  background: $bg;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+// -----------------------------
+// Home Page Background
+// -----------------------------
+.bg-blind-test {
+  @include page-bg;
+  padding-top: $navbar-padding-top;
+}
+
+// -----------------------------
+// Session Page Background
+// -----------------------------
+.bg-session {
+  @include page-bg;
+  padding-top: $navbar-padding-top;
+}
+
+// -----------------------------
+// Show/Play Page Background
+// -----------------------------
+.bg-show {
+  @include page-bg;
+  max-height: 100vh;
+  max-height: 100dvh;
+  overflow: hidden;
+  padding-top: calc(2rem + #{$safe-area-top});
+}
+
+// -----------------------------
+// Results Page Background
+// -----------------------------
+.bg-results {
+  @include page-bg;
+  padding-top: calc(5rem + #{$safe-area-top});
+}
+
+// -----------------------------
+// Theme Background Colors
+// -----------------------------
+.bg-orange-theme {
+  background-color: $orange;
+}
+
+.bg-yellow-theme {
+  background-color: $yellow;
+}
+
+.bg-purple-theme {
+  background-color: $purple;
+}
+
+.bg-cream-theme {
+  background-color: $cream;
+}
+
+.bg-gray-theme {
+  background-color: $gray;
+}

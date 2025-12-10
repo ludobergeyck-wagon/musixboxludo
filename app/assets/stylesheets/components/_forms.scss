@@ -1,0 +1,71 @@
+// ==========================================================
+// _forms.scss - Neo Brutalism Form Elements
+// ==========================================================
+@import "../base/variables";
+
+// -----------------------------
+// Input Fields
+// -----------------------------
+.form-input {
+  background: $white;
+  border: $border-width solid $border-color;
+  border-radius: $border-radius;
+  padding: 0.6rem 0.8rem;
+  font-weight: 500;
+  color: $black;
+  width: 100%;
+  box-shadow: $shadow-sm;
+  font-size: 0.9rem;
+
+  &:focus {
+    outline: none;
+    border-color: $orange;
+  }
+
+  &::placeholder {
+    color: rgba($black, 0.5);
+  }
+}
+
+// -----------------------------
+// Counter Component
+// -----------------------------
+.counter-value {
+  min-width: 60px;
+}
+
+// -----------------------------
+// Camera Area (Share page)
+// -----------------------------
+.camera-area {
+  margin-bottom: 1rem;
+
+  video,
+  img {
+    width: 100%;
+    border-radius: $border-radius-sm;
+  }
+}
+
+// -----------------------------
+// Share Buttons Container
+// -----------------------------
+.share-buttons {
+  position: fixed;
+  bottom: 1rem;
+  left: 20px;
+  right: 20px;
+  max-width: 335px;
+  margin: 0 auto;
+  display: grid;
+  gap: 0.5rem;
+}
+
+// -----------------------------
+// Bootstrap Legend Fix
+// -----------------------------
+// In bootstrap 5 legend floats left and requires the following element
+// to be cleared. This fixes radio button / checkbox groups.
+legend ~ div.form-check:first-of-type {
+  clear: left;
+}

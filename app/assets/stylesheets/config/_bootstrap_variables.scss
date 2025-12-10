@@ -1,29 +1,45 @@
-// This is where you override default Bootstrap variables
-// 1. Find all Bootstrap variables that you can override at the end of each component's documentation under the `Sass variables` anchor
-// e.g. here are the ones you can override for the navbar https://getbootstrap.com/docs/5.3/components/navbar/#sass-variables
-// 2. These variables are defined with default value (see https://robots.thoughtbot.com/sass-default)
-// 3. You can override them below!
+// ==========================================================
+// _bootstrap_variables.scss - Bootstrap Overrides
+// ==========================================================
 
-// General style
+// Colors for Bootstrap (legacy + new)
+$neo-orange: #F97316;
+$neo-yellow: #FACC15;
+$neo-green: #22c55e;
+$neo-black: #1a1a1a;
+$neo-bg: #FFF7ED;
+
+$red: #FD1015;
+$blue: #0D6EFD;
+$yellow: #FFC65A;
+$orange: #E67E22;
+$green: #1EDD88;
+$gray: #0E0000;
+$light-gray: #F4F4F4;
+
+// -----------------------------
+// General Style
+// -----------------------------
 $font-family-sans-serif: $body-font;
-$headings-font-family:   $headers-font;
-$body-bg:                $light-gray;
-$font-size-base:         1rem;
+$headings-font-family: $headers-font;
+$body-bg: $light-gray;
+$font-size-base: 1rem;
 
-// Colors
+// -----------------------------
+// Bootstrap Colors
+// -----------------------------
 $body-color: $gray;
-$primary:    $blue;
-$success:    $green;
-$info:       $yellow;
-$danger:     $red;
-$warning:    $orange;
+$primary: $blue;
+$success: $green;
+$info: $yellow;
+$danger: $red;
+$warning: $orange;
 
-
-// Buttons & inputs' radius
-$border-radius-sm:            .0625rem;
-$border-radius:               .125rem;
-$border-radius-lg:            .25rem;
-$border-radius-xl:            .5rem;
-$border-radius-xxl:           1rem;
-
-// Override other variables below!
+// -----------------------------
+// Border Radius
+// -----------------------------
+$border-radius-sm: 0.0625rem;
+$border-radius: 0.125rem;
+$border-radius-lg: 0.25rem;
+$border-radius-xl: 0.5rem;
+$border-radius-xxl: 1rem;

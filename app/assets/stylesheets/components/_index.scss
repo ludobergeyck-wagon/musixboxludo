@@ -1,10 +1,11 @@
-// Import your components CSS files here.
-@import "alert";
-@import "avatar";
-@import "bottom_buttons";
-@import "buzzer";
-@import "card";
-@import "container-100";
-@import "form_legend_clear";
-@import "navbar";
-@import "youtube_blur"
+// ==========================================================
+// components/_index.scss - Components Imports
+// ==========================================================
+
+@import "buttons";
+@import "cards";
+@import "forms";
+@import "typography";
+@import "shapes";
+@import "progress";
+@import "feedback";

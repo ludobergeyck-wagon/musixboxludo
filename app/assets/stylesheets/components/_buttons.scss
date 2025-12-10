@@ -1,0 +1,394 @@
+// ==========================================================
+// _buttons.scss - Neo Brutalism Button System
+// ==========================================================
+@import "../base/variables";
+
+// -----------------------------
+// Base Button Mixin
+// -----------------------------
+%btn-brutal-base {
+  border-style: solid;
+  border-color: $border-color;
+  transition: $transition-fast;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 700;
+  font-family: $font-family;
+}
+
+// -----------------------------
+// Generic Brutal Buttons
+// -----------------------------
+.btn-brutal {
+  @extend %btn-brutal-base;
+  border-width: $border-width;
+  box-shadow: $shadow;
+  padding: 0.75rem 1.5rem;
+  border-radius: $border-radius;
+  text-transform: uppercase;
+
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: $shadow-active;
+  }
+}
+
+.btn-brutal-orange {
+  @extend .btn-brutal;
+  background: $orange;
+  color: $white;
+
+  &:hover {
+    color: $white;
+    background: $orange;
+  }
+}
+
+.btn-brutal-yellow {
+  @extend .btn-brutal;
+  background: $yellow;
+  color: $black;
+
+  &:hover {
+    color: $black;
+    background: $yellow;
+  }
+}
+
+.btn-brutal-green {
+  @extend .btn-brutal;
+  background: $green;
+  color: $white;
+
+  &:hover {
+    color: $white;
+    background: $green;
+  }
+}
+
+.btn-brutal-white {
+  @extend .btn-brutal;
+  background: $white;
+  color: $black;
+
+  &:hover {
+    color: $black;
+  }
+}
+
+.btn-brutal-outline {
+  @extend .btn-brutal;
+  background: transparent;
+  color: $black;
+}
+
+// Size modifiers
+.btn-brutal-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-width: $border-width-sm;
+  box-shadow: $shadow-sm;
+
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: $shadow-sm-active;
+  }
+}
+
+.btn-brutal-lg {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  border-width: $border-width-lg;
+  box-shadow: $shadow-lg;
+
+  &:active {
+    transform: translate(4px, 4px);
+    box-shadow: $shadow-active;
+  }
+}
+
+// -----------------------------
+// Quickplay Button (Circle - Home)
+// -----------------------------
+.btn-quickplay {
+  @extend %btn-brutal-base;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: $orange;
+  border-width: $border-width-lg;
+  box-shadow: $shadow-xl;
+
+  &:active {
+    transform: translate(4px, 4px);
+    box-shadow: $shadow;
+  }
+}
+
+.btn-quickplay-icon {
+  font-size: 3rem;
+  color: $white;
+  margin-left: 8px;
+}
+
+.btn-quickplay-text {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: $white;
+}
+
+.btn-quickplay-desc {
+  font-size: 0.7rem;
+  color: rgba($white, 0.8);
+  font-weight: 500;
+  margin-top: 0.2rem;
+}
+
+// Responsive Quickplay
+@media (min-width: 375px) {
+  .btn-quickplay {
+    width: 180px;
+    height: 180px;
+  }
+  .btn-quickplay-icon {
+    font-size: 3.5rem;
+  }
+  .btn-quickplay-text {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 428px) {
+  .btn-quickplay {
+    width: 200px;
+    height: 200px;
+  }
+  .btn-quickplay-icon {
+    font-size: 4rem;
+  }
+  .btn-quickplay-text {
+    font-size: 1.1rem;
+  }
+}
+
+// -----------------------------
+// Match Button (Home)
+// -----------------------------
+.btn-match {
+  @extend %btn-brutal-base;
+  background: $yellow;
+  color: $black;
+  border-width: $border-width;
+  box-shadow: $shadow-md;
+  max-width: 280px;
+
+  &:active {
+    transform: translate(3px, 3px);
+    box-shadow: $shadow-active;
+  }
+}
+
+.btn-match-desc {
+  font-size: 0.75rem;
+  color: rgba($black, 0.6);
+  font-weight: 500;
+}
+
+// -----------------------------
+// Buzzer (Show page)
+// -----------------------------
+.buzzer {
+  @extend %btn-brutal-base;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: $orange;
+  border-width: $border-width-lg;
+  box-shadow: $shadow-lg;
+
+  &:active {
+    transform: translate(3px, 3px);
+    box-shadow: $shadow-sm;
+  }
+}
+
+@media (min-width: 500px) {
+  .buzzer {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+// -----------------------------
+// Action Buttons (Show page)
+// -----------------------------
+.btn-go {
+  @extend %btn-brutal-base;
+  background: $orange;
+  color: $white;
+  border-width: $border-width;
+  box-shadow: $shadow;
+  font-size: 1rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: $border-radius;
+  text-transform: uppercase;
+
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: $shadow-active;
+  }
+}
+
+.btn-next {
+  @extend %btn-brutal-base;
+  background: $yellow;
+  color: $black;
+  border-width: $border-width;
+  box-shadow: $shadow;
+  font-size: 1rem;
+  text-transform: uppercase;
+
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: $shadow-active;
+  }
+}
+
+// -----------------------------
+// Counter Buttons (Session page)
+// -----------------------------
+.counter-btn {
+  @extend %btn-brutal-base;
+  width: 50px;
+  height: 50px;
+  background: $white;
+  border-width: $border-width;
+  box-shadow: $shadow;
+
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: $shadow-active;
+  }
+}
+
+// -----------------------------
+// Submit Button (Session page)
+// -----------------------------
+.btn-submit {
+  @extend %btn-brutal-base;
+  background: $yellow;
+  color: $black;
+  border-width: $border-width;
+  box-shadow: $shadow-md;
+  max-width: 320px;
+
+  &:active {
+    transform: translate(3px, 3px);
+    box-shadow: $shadow-active;
+  }
+}
+
+// -----------------------------
+// Results Page Buttons
+// -----------------------------
+.btn-share {
+  @extend %btn-brutal-base;
+  background: $orange;
+  color: $white;
+  border-width: $border-width;
+  box-shadow: $shadow-md;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: $border-radius-lg;
+  text-transform: uppercase;
+  display: block;
+  text-align: center;
+
+  &:hover {
+    color: $white;
+  }
+
+  &:active {
+    transform: translate(3px, 3px);
+    box-shadow: $shadow-active;
+  }
+}
+
+.btn-selfie {
+  @extend %btn-brutal-base;
+  background: $yellow;
+  color: $black;
+  border-width: $border-width;
+  box-shadow: $shadow-md;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: $border-radius-lg;
+  text-transform: uppercase;
+  display: block;
+  text-align: center;
+
+  &:hover {
+    color: $black;
+  }
+
+  &:active {
+    transform: translate(3px, 3px);
+    box-shadow: $shadow-active;
+  }
+}
+
+// -----------------------------
+// Navbar Buttons
+// -----------------------------
+.btn-logout {
+  @extend %btn-brutal-base;
+  background: $white;
+  color: $black;
+  border-width: $border-width-sm;
+  box-shadow: $shadow-sm;
+  font-size: 0.75rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: $border-radius;
+  text-transform: uppercase;
+
+  &:hover {
+    color: $black;
+  }
+
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: $shadow-sm-active;
+  }
+}
+
+.btn-login {
+  @extend %btn-brutal-base;
+  background: $orange;
+  color: $white;
+  border-width: $border-width-sm;
+  box-shadow: $shadow-sm;
+  font-size: 0.75rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: $border-radius;
+  text-transform: uppercase;
+
+  &:hover {
+    color: $white;
+  }
+
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: $shadow-sm-active;
+  }
+}
+
+// -----------------------------
+// Bootstrap Override
+// -----------------------------
+.btn-select:hover {
+  background-color: $purple;
+  color: $white;
+  border-color: $purple;
+}
