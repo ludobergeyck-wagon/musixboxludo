@@ -10,14 +10,14 @@ data-lobby-start-url-value="<%= play_session_path(@user_session) %>"
     <%= raw(@qr_svg.html_safe) %>
     <p class="fw-bold"><%= @content %></p>
     <!--Connected players are displayed here-->
-    <div id="players">
+    <div id="players" class="row row-cols-4 g-2 justify-content-center">
       <% @connected_users.each do |user| %>
         <%= render 'players', user: user %>
       <% end %>
     </div>
     <button
   type="button"
-  class="btn btn-primary"
+  class="btn-go"
   data-action="click->lobby#start"
       >
       Start game
