@@ -32,7 +32,9 @@
                 <% end %>
           </div>
           <!-- Contenu principal - Buzzer centré -->
-          <div class="content-main d-flex flex-column align-items-center justify-content-center flex-grow-1" data-controller="counter">
+         <div class="content-main d-flex flex-column align-items-center justify-content-center flex-grow-1" 
+          data-controller="counter" 
+          data-action="counter:timeup->toggle#disableBuzzer">
             <!-- Buzzer Platine avec Vinyl intégré -->
             <div class="d-flex justify-content-center align-items-center flex-column w-100">
               <%= link_to "#" , data: { action: "click->toggle#buzz click->lobby#buzzerPressed click->lobby#pauseVideo"

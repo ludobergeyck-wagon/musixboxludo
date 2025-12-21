@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
+  get 'profiles/show'
+  get 'users/show'
+  get 'users/edit'
+  get 'users/update'
   # get 'camera/show'
   get 'questions/show'
+  get 'profile', to: 'profiles#show'
   devise_for :users
   root to: "pages#home"
 

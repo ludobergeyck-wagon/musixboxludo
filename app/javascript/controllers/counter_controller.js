@@ -35,9 +35,13 @@ export default class extends Controller {
       }
 
       // Arrête le timer quand il atteint 0
-      if (this.remaining <= 0) {
-        clearInterval(this.timer)
-      }
+     // Arrête le timer quand il atteint 0
+    if (this.remaining <= 0) {
+      clearInterval(this.timer)
+  
+    // Émet un événement pour dire que le temps est écoulé
+      this.dispatch("timeup", { bubbles: true })
+}
     }, 100);  // Update fréquent pour fluidité
   }
 

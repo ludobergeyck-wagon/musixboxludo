@@ -64,4 +64,11 @@ export default class extends Controller {
       }
     }, 100)
   }
+disableBuzzer() {
+  console.log("Temps écoulé - buzzer désactivé")
+  if (this.hasBuzzerTarget) {
+    const link = this.buzzerTarget.closest('a')
+    link.classList.add('pe-none', 'opacity-50')
+  }
+}
 }
