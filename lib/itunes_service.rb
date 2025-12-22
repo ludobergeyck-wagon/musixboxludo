@@ -6,9 +6,9 @@ require 'uri'
 class ItunesService
   def self.search_by_genre(genre, year_range: nil)
     encoded_genre = URI.encode_www_form_component(genre)
-    offset = rand(0..50)
+    offset = rand(0..500)
     
-    url = "https://itunes.apple.com/search?term=#{encoded_genre}&entity=song&limit=200&offset=#{offset}&country=US"
+url = "https://itunes.apple.com/search?term=#{encoded_genre}&entity=song&limit=500&offset=#{offset}&country=US"
     response = HTTParty.get(url)
     data = JSON.parse(response.parsed_response)
     return [] unless data.is_a?(Hash)
@@ -24,7 +24,7 @@ class ItunesService
       end
     end
 
-    songs.shuffle.take(20).map do |song|
+    songs.shuffle.take(500).map do |song|
       {
         title: song["trackName"],
         artist: song["artistName"],
