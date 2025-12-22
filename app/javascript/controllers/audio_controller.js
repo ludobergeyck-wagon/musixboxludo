@@ -6,7 +6,7 @@ export default class extends Controller {
 
   connect() {
     console.log("audio connecté")
-
+  
     // Écoute l'événement "ended" pour arrêter le disque et le buzzer quand la musique finit
     if (this.hasAudioElementTarget) {
       this.audioElementTarget.addEventListener("ended", () => {
@@ -44,4 +44,11 @@ export default class extends Controller {
       this.visualizerTarget.classList.remove("paused")
     }
   }
+  disconnect() {
+  console.log("audio déconnecté")
+  if (this.hasAudioElementTarget) {
+    this.audioElementTarget.pause()
+    this.audioElementTarget.currentTime = 0
+  }
+}
 }

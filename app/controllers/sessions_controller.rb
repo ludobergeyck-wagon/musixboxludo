@@ -1,14 +1,14 @@
 class SessionsController < ApplicationController
 
-  def new
-    @playlists = Playlist.all
-    @session = Session.new
-    
-    @playlist_groups = {
-      "🎸 Genres" => Playlist.where(title: ["Rock", "Pop", "Jazz", "Blues", "Soul", "Funk", "Disco", "Metal", "Indie", "Punk", "Electronic", "Reggae", "Country", "Latin", "K-Pop", "Classic", "World", "Rap FR", "Rap US", "Hip Hop", "R'n'b"]),
-      "📅 Decades" => Playlist.where(title: ["60s Hits", "70s Hits", "80s Hits", "90s Hits", "2000s Hits", "Oldies", "Motown"])
-    }
-  end
+def new
+  @playlists = Playlist.all
+  @session = Session.new
+  
+  @playlist_groups = {
+    "🎸 Genres" => Playlist.where(title: ["Pop", "Hip Hop", "Electronic", "Reggae", "Country", "Metal", "Indie", "Latin", "K-Pop", "Rap FR", "Rap US", "House"]),
+    "📅 Decades" => Playlist.where(title: ["60s Hits", "70s Hits", "80s Hits", "90s Hits", "2000s Hits", "2010s Hits", "Oldies", "Motown"])
+  }
+end
 
   def year_range_from_filter(filter)
     case filter

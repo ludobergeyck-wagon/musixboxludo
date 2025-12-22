@@ -8,7 +8,7 @@
     <header class="text-center mb-2 position-relative z-1 flex-shrink-0">
       <h1 class="page-title mb-0 text-dark">Select your playlist</h1>
     </header>
-
+      
     <%= hidden_field_tag :mode, params[:mode] %>
     <%= f.hidden_field :playlist_id, data: { session_target: "hiddenPlaylist" } %>
     <%= f.hidden_field :number_of_questions, data: { session_target: "hiddenCount" } %>
@@ -55,8 +55,8 @@
                 <div class="col-4 col-md-3">
                   <input type="radio" name="session[playlist_radio]" id="playlist_<%= playlist.id %>" value="<%= playlist.id %>" class="d-none" data-session-target="playlist" data-action="change->session#select">
                   <label for="playlist_<%= playlist.id %>" class="playlist-card d-block w-100 py-2 rounded-3 text-center fw-bold">
-                    <%= playlist.title %>
-                  </label>
+                     <%= playlist.title %>
+                    </label>                   
                 </div>
               <% end %>
             </div>

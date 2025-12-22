@@ -124,6 +124,17 @@ songs_data = ItunesService.search_by_genre("motown")
 songs_data.each do |song_data|
   Song.create!(playlist: playlist_motown, title: song_data[:title], artist: song_data[:artist], preview_url: song_data[:preview_url], year: song_data[:year])
 end
+playlist_house = Playlist.create!({title:"House", user: user})
+songs_data = ItunesService.search_by_genre("house")
+songs_data.each do |song_data|
+  Song.create!(playlist: playlist_house, title: song_data[:title], artist: song_data[:artist], preview_url: song_data[:preview_url], year: song_data[:year])
+end
+
+playlist_2010s = Playlist.create!({title:"2010s Hits", user: user})
+songs_data = ItunesService.search_by_genre("2010s hits")
+songs_data.each do |song_data|
+  Song.create!(playlist: playlist_2010s, title: song_data[:title], artist: song_data[:artist], preview_url: song_data[:preview_url], year: song_data[:year])
+end
 
 
 
