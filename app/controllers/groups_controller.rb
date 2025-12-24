@@ -25,7 +25,7 @@ class GroupsController < ApplicationController
     @connected_users = User.where(id: connected_user_ids)
 
     # generate a qrcode
-    @content = "https://musixbox.games/groups/#{@group.id}"
+    @content = "https://musixboxx-50911a378c05.herokuapp.com/groups/#{@group.id}"
     @qr_svg = RQRCode::QRCode.new(@content).as_svg(
       module_size: 6,
       use_path: true
