@@ -1,8 +1,10 @@
 class ApplicationController < ActionController::Base
-  # before_action :authenticate_user!
-  # 
-  def skip_destroy_guest_user
-    # return true = do NOT delete guest
-    guest_user.user_sessions.exists?
+    before_action :configure_permitted_parameters, if: :devise_controller?
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:pseudo, :avatar])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:pseudo, :avatar])
   end
 end

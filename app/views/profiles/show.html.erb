@@ -1,2 +1,71 @@
-<h1>Profiles#show</h1>
-<p>Find me in app/views/profiles/show.html.erb</p>
+<div class="container py-5" style="padding-top: 80px;">
+  
+  <!-- Header Profil -->
+  <div class="card border-dark border-3 mb-4">
+  <div class="card-body text-center bg-warning">
+    <% if current_user.avatar.attached? %>
+      <%= image_tag current_user.avatar, class: "rounded-circle mb-3", style: "width: 100px; height: 100px; object-fit: cover; border: 3px solid black;" %>
+    <% else %>
+      <div class="rounded-circle bg-dark text-white d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 100px; height: 100px; font-size: 2rem;">
+        👤
+      </div>
+    <% end %>
+    <h1 class="fw-bold mb-2"><%= current_user.pseudo %></h1>
+    <p class="text-muted mb-0"><%= current_user.email %></p>
+  </div>
+</div>
+
+  <!-- Statistiques -->
+  <h2 class="fw-bold mb-3">📊 My Stats</h2>
+  <div class="row g-3 mb-4">
+    
+    <div class="col-6">
+      <div class="card border-dark border-2 h-100">
+        <div class="card-body text-center">
+          <div class="fs-1 fw-bold"><%= @games_played %></div>
+          <div class="text-muted">Games Played</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card border-dark border-2 h-100">
+        <div class="card-body text-center">
+          <div class="fs-1 fw-bold"><%= @total_score || 0 %></div>
+          <div class="text-muted">Total Score</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card border-dark border-2 h-100">
+        <div class="card-body text-center">
+          <div class="fs-1 fw-bold"><%= @best_score || 0 %></div>
+          <div class="text-muted">Best Score</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card border-dark border-2 h-100">
+        <div class="card-body text-center">
+          <div class="fs-1 fw-bold"><%= @average_score&.round(1) || 0 %></div>
+          <div class="text-muted">Average Score</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Actions -->
+  <div class="d-grid gap-2">
+    <%= link_to edit_user_registration_path, class: "btn btn-warning border-dark border-2 fw-bold py-3" do %>
+      ⚙️ Edit Account
+    <% end %>
+
+    <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-outline-dark fw-bold py-3" do %>
+      🚪 Logout
+    <% end %>
+  </div>
+
+</div>
