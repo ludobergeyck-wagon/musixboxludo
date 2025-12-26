@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'songs/search'
+  get 'songs/create'
+  get 'songs/destroy'
   get 'profiles/show'
   # get 'camera/show'
   get 'questions/show'
@@ -6,7 +9,11 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
 
-
+  resources :playlists do
+    resources :songs, only: [:create, :destroy]
+  end
+  get 'my_playlists', to: 'playlists#my_playlists'
+  get 'search_songs', to: 'songs#search'
   resources :playlists, only:[:index]
   resources :questions, only:[:create, :show, :edit, :update]
 
