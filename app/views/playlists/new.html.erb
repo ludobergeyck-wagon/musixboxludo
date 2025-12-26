@@ -1,0 +1,33 @@
+<div class="min-vh-100 px-3" style="padding-top: 80px; padding-bottom: 30px;">
+  <div class="container" style="max-width: 500px;">
+
+    <!-- Header -->
+    <div class="text-center mb-4">
+      <h1 class="fw-bold">➕ New Playlist</h1>
+    </div>
+
+    <!-- Formulaire -->
+    <div class="card border-dark border-2 shadow">
+      <div class="card-body p-4">
+        <%= simple_form_for @playlist do |f| %>
+          
+          <div class="mb-4">
+            <label class="form-label fw-bold">Playlist name</label>
+            <%= f.text_field :title, class: "form-control border-dark border-2 py-2", placeholder: "My awesome playlist" %>
+          </div>
+
+          <div class="d-grid">
+            <%= f.submit "Create", class: "btn btn-warning border-dark border-2 fw-bold py-3" %>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Back link -->
+    <div class="text-center mt-4">
+      <%= link_to "← Back to My Playlists", my_playlists_path, class: "btn btn-outline-dark fw-bold" %>
+    </div>
+
+  </div>
+</div>
