@@ -30,7 +30,7 @@ end
  def destroy
   @playlist = Playlist.find(params[:id])
   @playlist.destroy
-    redirect_to playlists_path, notice: "Playlist deleted!"
+  redirect_to my_playlists_path, notice: "Playlist deleted!"
  end
 
 def my_playlists
