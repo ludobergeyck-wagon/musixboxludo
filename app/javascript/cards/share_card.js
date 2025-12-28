@@ -1,25 +1,32 @@
 console.log("share_card.js loaded");
 
-// Partage des résultats
 window.shareResults = function () {
-  if (navigator.share) {
-    navigator.share({
-      title: "Mes résultats MusixBox",
-      text: "J'ai terminé ma session sur MusixBox ! 🎵",
-      url: window.location.href,
-    }).catch((err) => {
-      console.error("Erreur partage:", err);
-    });
-  } else {
-    navigator.clipboard
-      .writeText(window.location.href)
-      .then(() => alert("Lien copié ! Collez-le pour partager."))
-      .catch((err) => {
-        console.error("Erreur copie lien:", err);
-        alert("Impossible de copier le lien.");
-      });
-  }
-};
+  // 1. Sélectionne la card à capturer
+  const cardElement = document.querySelector(".card-result");
+
+  // 2. Capture la card en image avec html2canvas
+  html2canvas(cardElement, { scale: 2, backgroundColor: "#FFA500" })
+    .then((canvas) => {
+      
+      // 3. Convertit le canvas en "blob" (fichier binaire)
+      canvas.toBlob((blob) => {
+        
+        // 4. Crée un fichier PNG à partir du blob
+        const file = new File([blob], `musixbox_${Date.now()}.png`, { type: "image/png" });
+
+        // 5. Vérifie si le navigateur peut partager des fichiers
+        if (navigator.share && navigator.canShare({ files: [file] })) {
+          
+          // 6. Partage L'IMAGE (pas l'URL !)
+          navigator.share({
+            title: "Mes résultats MusixBox",
+            text: "J'ai terminé ma session sur MusixBox ! 🎵",
+            files: [file],  // ✅ Partage le FICHIER IMAGE
+          })
+        }
+      }, "image/png");
+    })
+}
 
 // Sauvegarde de la card en image
 window.savePhoto = function () {
