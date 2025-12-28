@@ -92,9 +92,23 @@ export default class extends Controller {
       }
     }
 
-    if (data.type === 'buzzer_locked') {
+  if (data.type === 'buzzer_locked') {
       const buzzer = document.querySelector('[data-toggle-target="buzzer"]')
       const buzzerMessage = document.getElementById('buzzer-message')
+
+      // Arrête la musique pour tout le monde
+      const audioEl = document.querySelector('[data-controller~="audio"]')
+      if (audioEl) {
+        const audioController = this.application.getControllerForElementAndIdentifier(audioEl, 'audio')
+        if (audioController) audioController.pause()
+      }
+
+      // Arrête le timer pour tout le monde
+      const counterEl = document.querySelector('[data-controller~="counter"]')
+      if (counterEl) {
+        const counterController = this.application.getControllerForElementAndIdentifier(counterEl, 'counter')
+        if (counterController) counterController.stopTimer()
+      }
 
       if (data.user_id === this.userIdValue) {
         // I pressed the buzzer - toggle controller handles this
