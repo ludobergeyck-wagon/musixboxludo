@@ -81,6 +81,9 @@
   box-shadow: $shadow-md;
   letter-spacing: 0.1em;
   transition: all 0.3s ease;
+  min-width: 120px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 
 // État urgent - moins de 10 secondes

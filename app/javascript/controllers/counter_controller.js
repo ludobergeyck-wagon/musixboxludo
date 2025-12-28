@@ -60,7 +60,10 @@ export default class extends Controller {
     const secs = totalSeconds % 60
     return `${mins}:${secs.toString().padStart(2, '0')}`
   }
-
+  
+  stopTimer() {
+  clearInterval(this.timer)
+  } 
   // Nettoyage du chrono
   disconnect() {
     clearInterval(this.timer)
