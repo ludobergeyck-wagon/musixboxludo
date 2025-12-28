@@ -1,21 +1,28 @@
 class SongsController < ApplicationController
   def search
-    if params[:query].present?
-  @songs = ItunesService.search_by_genre(params[:query])
-    else
-  @songs = []
-    end 
+  if params[:playlist_id].present?
+    @playlist = Playlist.find(params[:playlist_id])
+  elsif params.dig(:search, :playlist_id).present?
+    @playlist = Playlist.find(params.dig(:search, :playlist_id))
+  end
+  
+  query = params[:query] || params.dig(:search, :query)
+  
+  if query.present?
+    @songs = ItunesService.search(query)
+  else
+    @songs = []
+  end 
   end
 
   def create
-    @playlist = Playlist.find(params[:playlist_id])
-    @song = @playlist.songs.new(song_params)
-    if song.save
-        redirect_to @playlist, notice: "Song added!"
+      @playlist = Playlist.find(params[:playlist_id])
+      @song = @playlist.songs.new(song_params)
+    if @song.save
+      redirect_to search_songs_path(playlist_id: @playlist.id, query: params[:query]), notice: "Song added!"
     else
-        redirect_to @playlist, alert: "Error adding song"
+      redirect_to search_songs_path(playlist_id: @playlist.id, query: params[:query]), alert: "Error adding song"
     end
-
   end
 
   def destroy
@@ -24,10 +31,10 @@ class SongsController < ApplicationController
     @song.destroy
     redirect_to @playlist, notice: "Song removed!"
   end
+
+  private 
+
+  def song_params
+    params.require(:song).permit(:title, :artist, :preview_url, :year)
+  end
 end
-
-private 
-
- def song_params
-   params.require(:song).permit(:title, :artist, :preview_url, :year)
- end

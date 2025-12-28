@@ -4,6 +4,9 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
 static targets = ["value", "hiddenCount", "hiddenPlaylist", "playlist"]
   connect() { 
+     // Efface le selfie de la partie précédente
+    localStorage.removeItem("userSelfie")
+    
      this.count = parseInt(this.valueTarget.textContent)
      this.max = 10
      this.min = 1

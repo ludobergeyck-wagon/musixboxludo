@@ -8,6 +8,11 @@ def new
     "🎸 Genres" => Playlist.where(title: ["Pop", "Hip Hop", "Electronic", "Reggae", "Country", "Metal", "Indie", "Latin", "K-Pop", "Rap FR", "Rap US", "House"]),
     "📅 Decades" => Playlist.where(title: ["60s Hits", "70s Hits", "80s Hits", "90s Hits", "2000s Hits", "2010s Hits", "Oldies", "Motown"])
   }
+  
+  # Ajoute les playlists perso seulement en mode Match
+  if params[:mode] == "match" && user_signed_in?
+    @playlist_groups["🎵 My Playlists"] = current_user.playlists
+  end
 end
 
   def year_range_from_filter(filter)

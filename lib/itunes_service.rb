@@ -33,4 +33,24 @@ url = "https://itunes.apple.com/search?term=#{encoded_genre}&entity=song&limit=5
       }
     end
   end
+
+  def self.search(query)
+  encoded_query = URI.encode_www_form_component(query)
+  
+  url = "https://itunes.apple.com/search?term=#{encoded_query}&entity=song&limit=50&country=US"
+  response = HTTParty.get(url)
+  data = JSON.parse(response.parsed_response)
+  return [] unless data.is_a?(Hash)
+
+  songs = data["results"]
+
+  songs.map do |song|
+    {
+      title: song["trackName"],
+      artist: song["artistName"],
+      preview_url: song["previewUrl"],
+      year: song["releaseDate"]&.slice(0, 4)
+    }
+  end
+  end
 end
