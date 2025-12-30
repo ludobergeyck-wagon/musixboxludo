@@ -21,7 +21,34 @@ class LobbyChannel < ApplicationCable::Channel
       }
     )
   end
+  def song_started(data)
+  Rails.cache.write("lobby_#{@group.id}_song_started_at", Time.current.to_f)
+  Rails.cache.write("lobby_#{@group.id}_song_duration", data['duration'] || 30)
+  
+  ActionCable.server.broadcast(
+    "lobby_#{@group.id}",
+    {
+      type: 'song_started',
+      started_at: Time.current.to_f
+    }
+  )
+  end
 
+def request_sync(data)
+  started_at = Rails.cache.read("lobby_#{@group.id}_song_started_at")
+  
+  if started_at
+    elapsed = Time.current.to_f - started_at
+    ActionCable.server.broadcast(
+      "lobby_#{@group.id}",
+      {
+        type: 'sync_time',
+        elapsed: elapsed,
+        user_id: data['user_id']
+      }
+    )
+  end
+end
   def unsubscribed
     @group = Group.find(params[:group_id])
 
@@ -60,7 +87,7 @@ class LobbyChannel < ApplicationCable::Channel
     )
     end
 
-     def answer_correct(data)
+    def answer_correct(data)
     ActionCable.server.broadcast(
       "lobby_#{@group.id}",
       {
@@ -68,7 +95,7 @@ class LobbyChannel < ApplicationCable::Channel
         user_id: data['user_id']
       }
     )
-  end
+    end
 
   def next_question(data)
   ActionCable.server.broadcast(
