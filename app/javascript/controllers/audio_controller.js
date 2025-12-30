@@ -1,25 +1,46 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="audio"
 export default class extends Controller {
   static targets = ["player", "audioElement", "visualizer", "buzzer"]
+  static values = { groupId: Number }
 
   connect() {
     console.log("audio connecté")
   
-    // Écoute l'événement "ended" pour arrêter le disque et le buzzer quand la musique finit
     if (this.hasAudioElementTarget) {
       this.audioElementTarget.addEventListener("ended", () => {
         console.log("Musique terminée - arrêt des animations")
-        // Arrête le vinyl
         if (this.hasVisualizerTarget) {
           this.visualizerTarget.classList.add("paused")
         }
-        // Arrête l'animation pulse du buzzer
         if (this.hasBuzzerTarget) {
           this.buzzerTarget.classList.add("music-ended")
         }
       })
+
+      // Quand la musique commence à jouer, notifie le serveur
+      this.audioElementTarget.addEventListener("play", () => {
+        this.notifySongStarted()
+      })
+    }
+  }
+
+  notifySongStarted() {
+    // Envoie au serveur que la chanson a démarré
+    const event = new CustomEvent("song-started", {
+      detail: { duration: this.audioElementTarget.duration }
+    })
+    window.dispatchEvent(event)
+  }
+
+  syncToTime(seconds) {
+    if (this.hasAudioElementTarget && seconds > 0) {
+      console.log(`Syncing audio to ${seconds} seconds`)
+      this.audioElementTarget.currentTime = seconds
+      this.audioElementTarget.play()
+      if (this.hasVisualizerTarget) {
+        this.visualizerTarget.classList.remove("paused")
+      }
     }
   }
 
@@ -28,7 +49,6 @@ export default class extends Controller {
     if (this.audioElementTarget) {
       this.audioElementTarget.pause()
     }
-    // Stoppe l'animation des barres
     if (this.hasVisualizerTarget) {
       this.visualizerTarget.classList.add("paused")
     }
@@ -39,16 +59,16 @@ export default class extends Controller {
     if (this.audioElementTarget) {
       this.audioElementTarget.play()
     }
-    // Relance l'animation des barres
     if (this.hasVisualizerTarget) {
       this.visualizerTarget.classList.remove("paused")
     }
   }
+
   disconnect() {
-  console.log("audio déconnecté")
-  if (this.hasAudioElementTarget) {
-    this.audioElementTarget.pause()
-    this.audioElementTarget.currentTime = 0
+    console.log("audio déconnecté")
+    if (this.hasAudioElementTarget) {
+      this.audioElementTarget.pause()
+      this.audioElementTarget.currentTime = 0
+    }
   }
-}
 }

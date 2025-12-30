@@ -1,7 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import consumer from "channels/consumer"
 
-// Connects to data-controller="lobby"
 export default class extends Controller {
   static values = {
     groupId: Number,
@@ -14,32 +13,50 @@ export default class extends Controller {
   connect() {
     console.log("connected")
 
-  // Si je ne suis pas l'host, je mets la musique en pause
-  if (!this.isHostValue) {
-    setTimeout(() => {
-      const audioEl = document.querySelector('[data-controller~="audio"]')
-      if (audioEl) {
-        const audioController = this.application.getControllerForElementAndIdentifier(audioEl, 'audio')
-        if (audioController) audioController.pause()
-      }
-    }, 100)
-  }
     this.channel = consumer.subscriptions.create(
       {
         channel: "LobbyChannel",
         group_id: this.groupIdValue,
         user_session_id: this.userSessionIdValue,
-        user_id: this.userIdValue      },
+        user_id: this.userIdValue
+      },
       {
         received: this.received.bind(this)
       }
     )
+
+    // Si je ne suis pas l'host, je demande la synchronisation
+    if (!this.isHostValue) {
+      setTimeout(() => {
+        // Pause la musique en attendant la sync
+        const audioEl = document.querySelector('[data-controller~="audio"]')
+        if (audioEl) {
+          const audioController = this.application.getControllerForElementAndIdentifier(audioEl, 'audio')
+          if (audioController) audioController.pause()
+        }
+        // Demande la position actuelle au serveur
+        this.channel.perform('request_sync', { user_id: this.userIdValue })
+      }, 500)
+    }
+
+    // Écoute quand l'host lance la musique
+    window.addEventListener('song-started', this.handleSongStarted.bind(this))
+  }
+
+  handleSongStarted(event) {
+    // Seulement l'host envoie le signal de démarrage
+    if (this.isHostValue) {
+      this.channel.perform('song_started', { 
+        duration: event.detail.duration 
+      })
+    }
   }
 
   disconnect() {
     if (this.channel) {
       this.channel.unsubscribe()
     }
+    window.removeEventListener('song-started', this.handleSongStarted.bind(this))
   }
 
   start() {
@@ -53,12 +70,8 @@ export default class extends Controller {
     })
   }
 
-
-
   received(data) {
     console.log("Received:", data)
-    console.log("HTML content:", data.html)
-    console.log("Players element:", document.getElementById('players'))
 
     if (data.type === 'user_joined') {
       const playersEl = document.getElementById('players')
@@ -66,6 +79,21 @@ export default class extends Controller {
 
       if (playersEl && !existingPlayer) {
         playersEl.insertAdjacentHTML('beforeend', data.html)
+      }
+    }
+
+    // NOUVEAU : Synchronisation de la musique
+    if (data.type === 'sync_time') {
+      // Seulement pour le joueur qui a demandé la sync
+      if (data.user_id === this.userIdValue) {
+        const audioEl = document.querySelector('[data-controller~="audio"]')
+        if (audioEl) {
+          const audioController = this.application.getControllerForElementAndIdentifier(audioEl, 'audio')
+          if (audioController) {
+            console.log(`Syncing to ${data.elapsed} seconds`)
+            audioController.syncToTime(data.elapsed)
+          }
+        }
       }
     }
 
@@ -86,7 +114,6 @@ export default class extends Controller {
     }
 
     if (data.type === "user_left") {
-      // console.log(`${data.user_id} left the lobby`)
       const playerElement = document.getElementById(`player_${data.user_id}`)
       if (playerElement) {
         playerElement.remove()
@@ -94,7 +121,6 @@ export default class extends Controller {
     }
 
     if (data.type === 'pseudo_updated') {
-      // Met à jour le nom du joueur dans le lobby en temps réel
       const playerElement = document.getElementById(`player_${data.user_id}`)
       if (playerElement) {
         const nameElement = playerElement.querySelector('p')
@@ -104,18 +130,16 @@ export default class extends Controller {
       }
     }
 
-  if (data.type === 'buzzer_locked') {
+    if (data.type === 'buzzer_locked') {
       const buzzer = document.querySelector('[data-toggle-target="buzzer"]')
       const buzzerMessage = document.getElementById('buzzer-message')
 
-      // Arrête la musique pour tout le monde
       const audioEl = document.querySelector('[data-controller~="audio"]')
       if (audioEl) {
         const audioController = this.application.getControllerForElementAndIdentifier(audioEl, 'audio')
         if (audioController) audioController.pause()
       }
 
-      // Arrête le timer pour tout le monde
       const counterEl = document.querySelector('[data-controller~="counter"]')
       if (counterEl) {
         const counterController = this.application.getControllerForElementAndIdentifier(counterEl, 'counter')
@@ -123,9 +147,8 @@ export default class extends Controller {
       }
 
       if (data.user_id === this.userIdValue) {
-        // I pressed the buzzer - toggle controller handles this
+        // I pressed the buzzer
       } else {
-        // Someone else pressed - hide my buzzer, show message
         if (buzzer) buzzer.classList.add('d-none')
         if (buzzerMessage) {
           buzzerMessage.textContent = `${data.user_id} is answering...`
@@ -138,7 +161,6 @@ export default class extends Controller {
       const buzzer = document.querySelector('[data-toggle-target="buzzer"]')
       const buzzerMessage = document.getElementById('buzzer-message')
 
-      // Show buzzer for everyone except the user who got it wrong
       if (data.user_id !== this.userIdValue) {
         if (buzzer) buzzer.classList.remove('d-none')
       }
@@ -157,7 +179,6 @@ export default class extends Controller {
     }
 
     if (data.type === "start_game") {
-      // each client goes to its own play_session_path(@user_session)
       window.location = this.startUrlValue
     }
 
@@ -178,7 +199,6 @@ export default class extends Controller {
     })
   }
 
-  // Call this when answer is correct
   answerCorrect() {
     this.channel.perform('answer_correct', {
       user_id: this.userIdValue
@@ -187,10 +207,8 @@ export default class extends Controller {
 
   goToNext(event) {
     event.preventDefault()
-    console.log("href:", event.currentTarget.href)
     const url = new URL(event.currentTarget.href)
     const questionId = url.searchParams.get('current_question')
-    console.log("questionId:", questionId)
     this.channel.perform('next_question', { question_id: questionId })
   }
 
@@ -201,5 +219,4 @@ export default class extends Controller {
   playVideo() {
     this.channel.perform('play_video', { user_id: this.userIdValue })
   }
-
 }
