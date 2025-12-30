@@ -1,11 +1,12 @@
 <% questions=Question.where(session_id: @user_session.session_id).order(:id) %>
   <% total_questions=questions.count %>
     <% current_index=questions.find_index { |q| q.id==@current_question.id }.to_i + 1 %>
-      <div class="container-100 d-flex flex-column justify-content-between position-relative" data-controller="lobby"
-        data-lobby-user-id-value="<%= current_or_guest_user.id %>"
-        data-lobby-group-id-value="<%= @user_session.group.id %>"
-        data-lobby-start-url-value="<%= play_session_path(@user_session) %>"
-        data-lobby-session-path-value="<%= play_session_path(@user_session) %>">
+    <div class="container-100 d-flex flex-column justify-content-between position-relative" data-controller="lobby"
+  data-lobby-user-id-value="<%= current_or_guest_user.id %>"
+  data-lobby-group-id-value="<%= @user_session.group.id %>"
+  data-lobby-start-url-value="<%= play_session_path(@user_session) %>"
+  data-lobby-session-path-value="<%= play_session_path(@user_session) %>"
+  data-lobby-is-host-value="<%= @user_session.group.host_id == current_or_guest_user.id %>">
         <div class="bg-show" data-controller="audio toggle">
           <!-- Video STICKY avec progress bar et feedback PAR-DESSUS -->
           <div class="video-sticky position-relative">

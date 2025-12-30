@@ -7,11 +7,23 @@ export default class extends Controller {
     groupId: Number,
     userId: Number,
     startUrl: String,
-    sessionPath: String
+    sessionPath: String,
+    isHost: Boolean
   }
 
   connect() {
     console.log("connected")
+
+  // Si je ne suis pas l'host, je mets la musique en pause
+  if (!this.isHostValue) {
+    setTimeout(() => {
+      const audioEl = document.querySelector('[data-controller~="audio"]')
+      if (audioEl) {
+        const audioController = this.application.getControllerForElementAndIdentifier(audioEl, 'audio')
+        if (audioController) audioController.pause()
+      }
+    }, 100)
+  }
     this.channel = consumer.subscriptions.create(
       {
         channel: "LobbyChannel",

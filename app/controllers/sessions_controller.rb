@@ -46,7 +46,7 @@ end
       @user_session = UserSession.create!(
         user:    current_or_guest_user,
         session: @session,
-        group: Group.create
+        group: Group.create(host: current_or_guest_user)
       )
 
       if params[:mode] == "match"
