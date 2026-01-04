@@ -219,4 +219,4 @@ export default class extends Controller {
   playVideo() {
     this.channel.perform('play_video', { user_id: this.userIdValue })
   }
-}
+}""
