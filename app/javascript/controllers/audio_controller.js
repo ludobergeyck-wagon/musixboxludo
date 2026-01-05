@@ -2,63 +2,28 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["player", "audioElement", "visualizer", "buzzer"]
-  static values = {
-    groupId: Number,
-    unlocked: { type: Boolean, default: false }
-  }
+  static values = { groupId: Number }
 
   connect() {
     console.log("audio connecté")
- // Unlock au premier tap (seulement si on a l'audio = on est l'hôte)
-  if (this.hasAudioElementTarget) {
-    const unlockOnInteraction = () => {
-      this.unlockAudio()
+  
+    if (this.hasAudioElementTarget) {
+      this.audioElementTarget.addEventListener("ended", () => {
+        console.log("Musique terminée - arrêt des animations")
+        if (this.hasVisualizerTarget) {
+          this.visualizerTarget.classList.add("paused")
+        }
+        if (this.hasBuzzerTarget) {
+          this.buzzerTarget.classList.add("music-ended")
+        }
+      })
+
+      this.audioElementTarget.addEventListener("play", () => {
+        this.notifySongStarted()
+      })
     }
-    
-    document.addEventListener("touchstart", unlockOnInteraction, { once: true })
-    document.addEventListener("click", unlockOnInteraction, { once: true })
   }
 
-  if (this.hasAudioElementTarget) {
-    this.audioElementTarget.addEventListener("ended", () => {
-      console.log("Musique terminée - arrêt des animations")
-      if (this.hasVisualizerTarget) {
-        this.visualizerTarget.classList.add("paused")
-      }
-      if (this.hasBuzzerTarget) {
-        this.buzzerTarget.classList.add("music-ended")
-      }
-    })
-
-    this.audioElementTarget.addEventListener("play", () => {
-      this.notifySongStarted()
-    })
-  }
-  }
-
-  /* ===============================
-   * iOS UNLOCK (OBLIGATOIRE)
-   * =============================== */
-  unlockAudio() {
-    if (!this.hasAudioElementTarget || this.unlockedValue) return
-
-    const audio = this.audioElementTarget
-    audio.muted = true
-
-    audio.play().then(() => {
-      audio.pause()
-      audio.currentTime = 0
-      audio.muted = false
-      this.unlockedValue = true
-      console.log("Audio unlocked (iOS OK)")
-    }).catch(error => {
-      console.error("Audio unlock failed", error)
-    })
-  }
-
-  /* ===============================
-   * SERVER SYNC
-   * =============================== */
   notifySongStarted() {
     const event = new CustomEvent("song-started", {
       detail: { duration: this.audioElementTarget.duration }
@@ -68,57 +33,66 @@ export default class extends Controller {
 
   syncToTime(seconds) {
     if (this.hasAudioElementTarget && seconds > 0) {
-    console.log(`Syncing audio to ${seconds} seconds`)
-
-    this.audioElementTarget.currentTime = seconds
-    this.audioElementTarget.play().catch(e => {
-      console.error("Play blocked", e)
-    })
-
-    if (this.hasVisualizerTarget) {
-      this.visualizerTarget.classList.remove("paused")
+      console.log(`Syncing audio to ${seconds} seconds`)
+      this.audioElementTarget.currentTime = seconds
+      // ✅ CORRECTION : audioElementTarget au lieu de audioElementElement
+      this.audioElementTarget.play().catch(err => {
+        console.error("Erreur lors de la lecture audio:", err)
+        this.showPlayPrompt()
+      })
+      if (this.hasVisualizerTarget) {
+        this.visualizerTarget.classList.remove("paused")
+      }
     }
   }
-}
 
-  /* ===============================
-   * CONTROLS
-   * =============================== */
   pause() {
     console.log("pause() called")
-
-    if (this.hasAudioElementTarget) {
+    if (this.audioElementTarget) {
       this.audioElementTarget.pause()
     }
-
     if (this.hasVisualizerTarget) {
       this.visualizerTarget.classList.add("paused")
     }
   }
-play() {
-  console.log("play() called")
 
-  // iOS ne permet pas de play() si l'audio n'est pas unlocké par un clic utilisateur
-  if (!this.unlockedValue) {
-    console.log("Audio not unlocked – play blocked")
-    return
+  play() {
+    console.log("play() called")
+    if (this.audioElementTarget) {
+      // ✅ Gestion d'erreur pour mobile
+      this.audioElementTarget.play().catch(err => {
+        console.error("Autoplay bloqué:", err)
+        this.showPlayPrompt()
+      })
+    }
+    if (this.hasVisualizerTarget) {
+      this.visualizerTarget.classList.remove("paused")
+    }
   }
 
-  if (this.hasAudioElementTarget) {
-    this.audioElementTarget.play().catch(e => {
-      console.error("Play blocked", e)
+  // ✅ Affiche le prompt existant dans le DOM
+  showPlayPrompt() {
+    const overlay = document.getElementById('audio-unlock-overlay')
+    if (overlay) {
+      overlay.classList.remove('d-none')
+    }
+  }
+
+  // ✅ Cache le prompt et lance le son (appelé par le bouton dans la vue)
+  unlockAudio() {
+    this.audioElementTarget.play().then(() => {
+      const overlay = document.getElementById('audio-unlock-overlay')
+      if (overlay) {
+        overlay.classList.add('d-none')
+      }
+    }).catch(err => {
+      console.error("Impossible de lancer le son:", err)
+      alert("Votre navigateur bloque le son. Vérifiez vos paramètres.")
     })
   }
 
-  // Gestion du visualizer si présent
-  if (this.hasVisualizerTarget) {
-    this.visualizerTarget.classList.remove("paused")
-  }
-}
-
   disconnect() {
     console.log("audio déconnecté")
-
     if (this.hasAudioElementTarget) {
       this.audioElementTarget.pause()
       this.audioElementTarget.currentTime = 0

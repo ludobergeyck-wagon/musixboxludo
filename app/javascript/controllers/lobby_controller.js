@@ -109,7 +109,10 @@ export default class extends Controller {
       const audioEl = document.querySelector('[data-controller~="audio"]')
       if (audioEl) {
         const audioController = this.application.getControllerForElementAndIdentifier(audioEl, 'audio')
-        if (audioController) audioController.play()
+        // ✅ CORRECTION : Ajout de gestion d'erreur pour mobile
+        if (audioController) {
+          audioController.play()  // Le catch est maintenant dans audio_controller.play()
+        }
       }
     }
 
@@ -219,4 +222,4 @@ export default class extends Controller {
   playVideo() {
     this.channel.perform('play_video', { user_id: this.userIdValue })
   }
-}""
+}

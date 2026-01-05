@@ -97,4 +97,25 @@
             </div>
           </div>
         </div>
+        
+        <!-- Overlay pour débloquer le son sur mobile -->
+        <div id="audio-unlock-overlay" 
+             class="d-none position-fixed top-0 start-0 w-100 h-100 d-flex flex-column align-items-center justify-content-center"
+             style="background: rgba(0, 0, 0, 0.9); z-index: 9999; gap: 20px;">
+          
+          <div class="text-center" style="pointer-events: none;">
+            <h2 class="text-white mb-3">🔊 Activer le son</h2>
+            <p class="text-muted mb-4" style="max-width: 300px;">
+              Votre navigateur nécessite une interaction pour lancer le son
+            </p>
+          </div>
+          
+          <button 
+            class="btn-brutal-green px-5 py-3 fs-4 fw-bold text-uppercase"
+            style="pointer-events: auto;"
+            data-action="click->audio#unlockAudio">
+            Démarrer 🎵
+          </button>
+        </div>
+        
       </div>

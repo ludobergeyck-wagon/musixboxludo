@@ -1,7 +1,6 @@
 <% is_host = @user_session.group.host_id == current_or_guest_user.id %>
 
 <% if is_host %>
-  <!-- Audio seulement pour l'hôte - le vinyl est intégré dans le buzzer -->
   <div data-audio-target="player">
     <audio src="<%= question.song.preview_url %>"
       autoplay
