@@ -18,13 +18,19 @@
   </main>
 
   <!-- Bottom Buttons -->
-  <nav class="d-flex gap-3 mt-4 position-relative flex-column align-items-center" style="z-index: 1;">
-    <%= link_to new_session_path(mode: "match"), class: "btn-match w-100 py-3 rounded-3 text-decoration-none text-center d-flex flex-column align-items-center justify-content-center" do %>
-      <span class="d-flex align-items-center gap-2">
-        <span>⚔️</span>
-        <span class="fw-bold">Match</span>
-      </span>
-      <span class="btn-match-desc">Play with friends</span>
-    <% end %>
-  </nav>
+<nav class="d-flex gap-3 mt-4 position-relative flex-column align-items-center" style="z-index: 1;">
+  <button
+    class="btn-match w-100 py-3 rounded-3 text-decoration-none text-center d-flex flex-column align-items-center justify-content-center"
+    data-controller="audio"
+    data-action="click->audio#unlockAudio click->match#start">
+    
+    <span class="d-flex align-items-center gap-2">
+      <span>⚔️</span>
+      <span class="fw-bold">Match</span>
+    </span>
+    
+    <span class="btn-match-desc">Play with friends</span>
+    
+  </button>
+</nav>
 </div>
