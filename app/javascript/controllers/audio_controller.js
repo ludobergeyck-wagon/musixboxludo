@@ -9,25 +9,31 @@ export default class extends Controller {
 
   connect() {
     console.log("audio connecté")
-
-    if (this.hasAudioElementTarget) {
-      this.audioElementTarget.addEventListener("ended", () => {
-        console.log("Musique terminée - arrêt des animations")
-
-        if (this.hasVisualizerTarget) {
-          this.visualizerTarget.classList.add("paused")
-        }
-
-        if (this.hasBuzzerTarget) {
-          this.buzzerTarget.classList.add("music-ended")
-        }
-      })
-
-      // Quand la musique commence à jouer, notifie le serveur
-      this.audioElementTarget.addEventListener("play", () => {
-        this.notifySongStarted()
-      })
+ // Unlock au premier tap (seulement si on a l'audio = on est l'hôte)
+  if (this.hasAudioElementTarget) {
+    const unlockOnInteraction = () => {
+      this.unlockAudio()
     }
+    
+    document.addEventListener("touchstart", unlockOnInteraction, { once: true })
+    document.addEventListener("click", unlockOnInteraction, { once: true })
+  }
+
+  if (this.hasAudioElementTarget) {
+    this.audioElementTarget.addEventListener("ended", () => {
+      console.log("Musique terminée - arrêt des animations")
+      if (this.hasVisualizerTarget) {
+        this.visualizerTarget.classList.add("paused")
+      }
+      if (this.hasBuzzerTarget) {
+        this.buzzerTarget.classList.add("music-ended")
+      }
+    })
+
+    this.audioElementTarget.addEventListener("play", () => {
+      this.notifySongStarted()
+    })
+  }
   }
 
   /* ===============================
@@ -61,24 +67,19 @@ export default class extends Controller {
   }
 
   syncToTime(seconds) {
-    if (!this.unlockedValue) {
-      console.log("Audio not unlocked yet – sync blocked")
-      return
-    }
-
     if (this.hasAudioElementTarget && seconds > 0) {
-      console.log(`Syncing audio to ${seconds} seconds`)
+    console.log(`Syncing audio to ${seconds} seconds`)
 
-      this.audioElementTarget.currentTime = seconds
-      this.audioElementTarget.play().catch(e => {
-        console.error("Play blocked", e)
-      })
+    this.audioElementTarget.currentTime = seconds
+    this.audioElementTarget.play().catch(e => {
+      console.error("Play blocked", e)
+    })
 
-      if (this.hasVisualizerTarget) {
-        this.visualizerTarget.classList.remove("paused")
-      }
+    if (this.hasVisualizerTarget) {
+      this.visualizerTarget.classList.remove("paused")
     }
   }
+}
 
   /* ===============================
    * CONTROLS
@@ -94,25 +95,26 @@ export default class extends Controller {
       this.visualizerTarget.classList.add("paused")
     }
   }
+play() {
+  console.log("play() called")
 
-  play() {
-    console.log("play() called")
-
-    if (!this.unlockedValue) {
-      console.log("Audio not unlocked – play blocked")
-      return
-    }
-
-    if (this.hasAudioElementTarget) {
-      this.audioElementTarget.play().catch(e => {
-        console.error("Play blocked", e)
-      })
-    }
-
-    if (this.hasVisualizerTarget) {
-      this.visualizerTarget.classList.remove("paused")
-    }
+  // iOS ne permet pas de play() si l'audio n'est pas unlocké par un clic utilisateur
+  if (!this.unlockedValue) {
+    console.log("Audio not unlocked – play blocked")
+    return
   }
+
+  if (this.hasAudioElementTarget) {
+    this.audioElementTarget.play().catch(e => {
+      console.error("Play blocked", e)
+    })
+  }
+
+  // Gestion du visualizer si présent
+  if (this.hasVisualizerTarget) {
+    this.visualizerTarget.classList.remove("paused")
+  }
+}
 
   disconnect() {
     console.log("audio déconnecté")
